@@ -1,0 +1,70 @@
+{
+  "name": "WindowManagerDrydock",
+  "version": "1.0.0",
+  "description": "Development and testing of the Proscenium window manager codebase",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -p --progress --config webpack.config.js",
+    "dev-build": "webpack --progress -d --config webpack.config.js",
+    "watch": "webpack --progress -d --config webpack.config.js --watch",
+    "start": "webpack-dev-server --mode development --progress --config webpack.config.js --host 0.0.0.0 --port 8088"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Knossys/AccordionPropertySheet.git"
+  },
+  "keywords": [
+    "react",
+    "npm",
+    "webpack"
+  ],
+  "author": "Knossys",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Knossys/AccordionPropertySheet/wiki"
+  },
+  "homepage": "https://github.com/Knossys/AccordionPropertySheet/wiki",
+  "devDependencies": {
+    "@babel/preset-env": "^7.6.3",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "emotion": "^10.0.17",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "is-hotkey": "^0.1.6",
+    "react": "^16.9.0",
+    "react-dom": "^16.12.0",
+    "react-json-tree": "^0.11.2",
+    "slate": "^0.47.8",
+    "slate-react": "^0.22.9",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/react-fontawesome": "^0.1.5",
+    "bootstrap": "^4.3.1",
+    "css-loader": "^3.2.0",
+    "history": "^4.10.1",
+    "immutable": "^4.0.0-rc.12",
+    "rc-slider": "^8.7.1",
+    "react-ace": "^7.0.4",
+    "react-bootstrap": "^1.0.0-beta.12",
+    "react-cytoscapejs": "^1.2.0",
+    "react-datepicker": "^2.10.1",
+    "react-draggable": "^4.0.3",
+    "react-editable-svg-label": "^2.0.3",
+    "react-portal": "^4.2.0",
+    "react-router-dom": "^4.3.1",
+    "react-tabs": "^3.0.0",
+    "slate-editor": "^5.1.1",
+    "style-loader": "^1.0.0"
+  }
+}
