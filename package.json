@@ -8,7 +8,7 @@
     "build": "webpack -p --progress --config webpack.config.js",
     "dev-build": "webpack --progress -d --config webpack.config.js",
     "watch": "webpack --progress -d --config webpack.config.js --watch",
-    "start": "webpack-dev-server --mode development --progress --config webpack.config.js --host 0.0.0.0 --port 8088"
+    "start": "webpack-dev-server --mode development --progress --config webpack.config.js --host 0.0.0.0 --port 8083"
   },
   "repository": {
     "type": "git",
