@@ -1,0 +1,51 @@
+
+.panel-container {
+  display: flex;
+  min-height: 100px;
+  width: 100%;
+  height: 100%;
+}
+
+.panel {
+  background: #4e4e4e;;
+  border: 1px inset #717171;
+  color: #c5c5c5;
+  font-size: 8pt;
+  padding: 2px;
+  overflow: hidden;
+}
+.panel:first-child {
+
+}
+
+.resizer {
+  width: 8px;
+  background: #808080;
+  position: relative;
+  cursor: col-resize;
+  flex-shrink: 0;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */ 
+}
+
+.resizer::after,
+.resizer::before {
+  content: "";
+  border-left: 1px solid #333;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-100%);
+  right: 0;
+  display: inline-block;
+  height: 20px;
+  margin: 0 2px;
+}
+.resizer::before {
+  left: 0;
+}
+
+.resizegripper {
+  cursor: nwse-resize;
+}

@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Knossys/AccordionPropertySheet.git"
+    "url": "git+https://github.com/Mindtoeye/knossys-window-manager-drydock.git"
   },
   "keywords": [
     "react",
@@ -22,9 +22,9 @@
   "author": "Knossys",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Knossys/AccordionPropertySheet/wiki"
+    "url": "https://github.com/Mindtoeye/knossys-window-manager-drydock.git"
   },
-  "homepage": "https://github.com/Knossys/AccordionPropertySheet/wiki",
+  "homepage": "https://github.com/Mindtoeye/knossys-window-manager-drydock/wiki",
   "devDependencies": {
     "@babel/preset-env": "^7.6.3",
     "babel-core": "^6.26.3",
