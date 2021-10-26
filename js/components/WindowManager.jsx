@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import Window from './Window';
 import DataTools from './utils/DataTools';
 
+import '../../css/darktheme.css';
 import '../../css/wmanager.css';
 
 /**
@@ -188,12 +189,6 @@ export class WindowManager extends React.Component {
     }    
 
     let windowClass="desktopContent";
-
-    /*
-    if (this.props.settings.showGrid==true) {
-      windowClass="desktopContent gridDots"
-    }
-    */
 
     return (<div className={windowClass}>{this.props.children}{windows}</div>);
   }

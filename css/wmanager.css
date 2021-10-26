@@ -111,13 +111,13 @@
 .windowContent {
   color: var(--main-window-text);
   margin: 2px;
-  background: var(--main-window-content);
-  border: 1px inset #717171;
-  flex: 2;
-  display: flex;
   padding: 2px;
+  /*background: var(--main-window-content);*/
+  /*border: 1px inset #717171;*/
+  flex: 2;
+  display: flex;  
   overflow: hidden;
-  background: #605e5e;
+  /*background: #605e5e;*/
 }
 
 .windowAppContent {
@@ -194,18 +194,21 @@
 }
 
 .titlebar {
-  cursor: grab;
+  
 }
 
 .titlecontent {
   height: 14px;
   font-size: 8pt;
   text-align: left;
-  line-height: 18px;
+  line-height: 15px;
   flex: 1;
   flex-wrap: nowrap;
   overflow: hidden;
   color: lightgrey;
+  cursor: grab;
+  padding: 0px;
+  margin: 0px;
 }
 
 .widgetribbon {
@@ -238,6 +241,8 @@
   -webkit-border-bottom-right-radius: 25px;
   -moz-border-radius-bottomright: 25px;
   border-bottom-right-radius: 25px;
+
+  height: 18px;
 }
 
 .resizable {
@@ -247,11 +252,19 @@
 
 .gripper {
   position: absolute;
+  /*
   width: 16px;
   height: 16px;
+  */
   right: 0px;
   bottom: 0px;
-  background: url("images/icons/resize.png") no-repeat fixed center; ;
+  background: url("images/icons/resize.png") no-repeat fixed center;
+  cursor: nwse-resize;  
+}
+
+.gripper img {
+  width: 12px;
+  height: 12px;
 }
 
 .dialogControls {
@@ -290,8 +303,13 @@
   fill: var(--main-highlight);
 }
 
-.windowDebug {
-
+.windowDebug {  
+  margin: 2px;
+  /*border: 1 px inset #717171;*/
+  padding: 2px;
+  overflow: hidden;
+  /*background: #605e5e;*/
+  width: 100%;
 }
 
 .windowDebug p {

@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState, createRef } from "react";
 import ReactDOM from "react-dom";
 
 import Draggable, {DraggableCore} from 'react-draggable';
 import WindowDummyContent from './WindowDummyContent';
+import WindowGridContent from './WindowGridContent';
+import { uuidv4 } from './utils/uuid';
 
 import '../../css/wmanager.css';
+
+import gripper from '../../css/images/icons/resize.png';
 
 /**
  *
@@ -20,8 +24,111 @@ export class Window extends React.Component {
     this.state = {
       id: props.id,
       count: 0,
-      index: props.zIndex
+      index: props.zIndex,
+      status: "",
+      currentResizerId: uuidv4(),
+      minimum_size: 20,
+      original_width: 0,
+      original_height: 0,
+      original_mouse_x: 0,
+      original_mouse_y: 0,
+      original_x: 0,
+      original_y: 0      
     };
+
+    this.resizeStart=this.resizeStart.bind(this);
+    this.resize=this.resize.bind(this);
+    this.stopResize=this.stopResize.bind(this);    
+
+    this.maximizeWindow=this.maximizeWindow.bind(this);    
+  }
+
+  /**
+   *
+   */
+  componentDidMount() {
+    //console.log ("componentDidMount()");
+    
+    let currentResizer = document.getElementById (this.state.currentResizerId);
+    
+    // this is legit since some windows that are not dialogs should not be
+    // resizable
+    if (currentResizer!=null) {
+      currentResizer.addEventListener('mousedown', this.resizeStart);
+    }
+  }
+
+  /**
+   *
+   */
+  maximizeWindow (e,anId) {
+    //console.log ("maximizeWindow("+anId+")");
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (this.props.maximizeWindow) {
+      this.props.maximizeWindow (anId);
+    }    
+  }
+  
+  /**
+   *
+   */
+  resizeStart (e) {
+    //console.log ("resizeStart ("+this.props.id+")");
+
+    e.preventDefault();
+
+    let element=document.getElementById (this.props.id);
+
+    let original_width = parseFloat(getComputedStyle(element, null).getPropertyValue('width').replace('px', ''));
+    let original_height = parseFloat(getComputedStyle(element, null).getPropertyValue('height').replace('px', ''));
+    let original_x = element.getBoundingClientRect().left;
+    let original_y = element.getBoundingClientRect().top;
+    let original_mouse_x = e.pageX;
+    let original_mouse_y = e.pageY;
+    
+    this.setState ({
+      index: 0,
+      original_width: original_width,
+      original_height: original_height,
+      original_mouse_x: original_mouse_x,
+      original_mouse_y: original_mouse_y,
+      original_x: original_x,
+      original_y: original_y      
+    },(e) => {
+      window.addEventListener('mousemove', this.resize);
+      window.addEventListener('mouseup', this.stopResize);      
+    });
+  }
+
+  /**
+   *
+   */  
+  resize(e) {
+    //console.log ("resize ()");
+
+    let element=document.getElementById (this.props.id);
+
+    const width = this.state.original_width + (e.pageX - this.state.original_mouse_x);
+    const height = this.state.original_height + (e.pageY - this.state.original_mouse_y);
+
+    if (width > this.state.minimum_size) {
+      element.style.width = width + "px";
+    }
+
+    if (height > this.state.minimum_size) {
+      element.style.height = height + "px";
+    }
+  }
+
+  /**
+   *
+   */    
+  stopResize() {
+    //console.log ("stopResize ()");
+    window.removeEventListener('mousemove', this.resize);
   }
 
   /**
@@ -65,7 +172,8 @@ export class Window extends React.Component {
     let windowContent = this.props.children;
 
     if (windowContent==null) {
-      windowContent=<WindowDummyContent windowReference={this.props.windowReference}/>;
+      //windowContent=<WindowDummyContent windowReference={this.props.windowReference}/>;
+      windowContent=<WindowGridContent windowReference={this.props.windowReference}/>;
     }
 
     return (
@@ -103,8 +211,11 @@ export class Window extends React.Component {
           {windowContent}
         </div>
         <div className="statusbar">
-        Statusbar
-        </div>      
+          {this.state.status}
+        </div>
+        <div className="gripper">
+          <img id={this.state.currentResizerId} className="resizegripper" src={gripper} />
+        </div>        
       </div>
     </Draggable>);
   }

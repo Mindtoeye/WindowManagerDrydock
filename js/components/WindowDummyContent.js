@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
 import { uuidv4 } from './utils/uuid';
 
@@ -32,6 +31,8 @@ export class WindowDummyContent extends React.Component {
       <p>Initial y: {this.state.y}</p>
       <p>Initial width: {this.state.width}</p>
       <p>Initial height: {this.state.height}</p>
+      <p>Width: {this.state.width}</p>
+      <p>Height: {this.state.height}</p>      
     </div>);
   }
 }

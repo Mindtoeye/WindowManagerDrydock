@@ -40,7 +40,7 @@ export default class ApplicationManager extends ApplicationDriver {
   toggle (anId) {
     console.log ("toggle ("+anId+")");
 
-    let appData=this.getAppData();
+    let appData=this.getApps();
 
     for (let i=0;i<appData.length;i++) {
       let app=appData [i];
@@ -57,7 +57,7 @@ export default class ApplicationManager extends ApplicationDriver {
       }
     }
 
-    this.setAppData (appData);
+    this.setApps (appData);
   }
 
   /**
@@ -65,7 +65,14 @@ export default class ApplicationManager extends ApplicationDriver {
    */
   getApps () {
     return (this.apps);
-  } 
+  }
+
+  /**
+   * 
+   */
+  setApps (aSet) {
+    this.apps=aSet;
+  }
 
   /**
    *
