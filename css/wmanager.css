@@ -289,3 +289,17 @@
   stroke: var(--main-highlight);
   fill: var(--main-highlight);
 }
+
+.windowDebug {
+
+}
+
+.windowDebug p {
+  padding: 2px;
+  margin: 1px;
+  font-size: 8pt;
+  font-weight: normal;
+  line-height: 8pt;
+  color: white; 
+}
+

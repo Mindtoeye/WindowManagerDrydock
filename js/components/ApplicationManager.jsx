@@ -16,6 +16,7 @@ export default class ApplicationManager extends ApplicationDriver {
   constructor (aSetDriverData,aGetDriverData,aGetDriverReference,aSetAppData,aGetAppData,aGetAppReference) {
   	super ();
 
+    this.index=0;
   	this.apps=[];
 
   	this.setDriverData=aSetDriverData;
@@ -115,6 +116,9 @@ export default class ApplicationManager extends ApplicationDriver {
 
     anApplication.shown=true;
     anApplication.maximized=false;
+    anApplication.index=this.index;
+
+    this.index++;
 
     this.apps.push (anApplication);
   }

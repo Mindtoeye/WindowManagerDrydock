@@ -8,7 +8,7 @@ import "../css/wmgr/resizable.css";
 /**
  *
  */
-export class WindowContent extends React.Component {
+export class ApplicationWindowContent extends React.Component {
 
   /**
   *
@@ -35,4 +35,4 @@ export class WindowContent extends React.Component {
   }
 }
 
-export default WindowContent;
+export default ApplicationWindowContent;

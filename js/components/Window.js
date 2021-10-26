@@ -57,8 +57,6 @@ export class Window extends React.Component {
     let anIndex=this.state.index;
     let title=("Knossys: " + this.props.id);
 
-    console.log ("id: " + this.props.id);
-
     if (this.props.title) {
       title=this.props.title;
     }
@@ -67,7 +65,7 @@ export class Window extends React.Component {
     let windowContent = this.props.children;
 
     if (windowContent==null) {
-      windowContent=<WindowDummyContent/>;
+      windowContent=<WindowDummyContent windowReference={this.props.windowReference}/>;
     }
 
     return (

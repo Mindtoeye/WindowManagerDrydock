@@ -113,12 +113,18 @@ export class WindowManager extends React.Component {
     for (let i=0;i<list.length;i++) {
       let win=list [i];
       if (win.id==targetWindow) {
+        //console.log ("Take out of the list/remove from current z position");
         let updated=this.dataTools.deleteElement (list,win);
-        updated.push (win);
+        //console.log ("Push to the top of the list");
         win.selected=true;
-        this.props.list (updated);
+        updated.push (win);
+        this.setState ({pop: this.state.pop++});
+        return;
       }
     }
+
+    //this.props.list (updated);
+    //this.props.appManager.setApps (updated);
   }
 
   /**
@@ -188,8 +194,6 @@ export class WindowManager extends React.Component {
       windowClass="desktopContent gridDots"
     }
     */
-
-    //console.log ("render ("+windowReferences.length+") => " + windows.length);
 
     return (<div className={windowClass}>{this.props.children}{windows}</div>);
   }
