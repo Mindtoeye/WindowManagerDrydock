@@ -23,6 +23,17 @@ export class WindowManager extends React.Component {
     };
 
     this.dataTools=new DataTools ();
+
+    this.onKeyDown=this.onKeyDown.bind (this);
+  }
+
+  /**
+   *
+   */
+  onKeyDown (e) {
+    if (this.props.onKeyDown) {
+      this.props.onKeyDown (e);
+    }
   }
 
   /**
@@ -190,7 +201,7 @@ export class WindowManager extends React.Component {
 
     let windowClass="desktopContent";
 
-    return (<div className={windowClass}>{this.props.children}{windows}</div>);
+    return (<div tabIndex="0" onKeyDown={this.onKeyDown} className={windowClass}>{this.props.children}{windows}</div>);
   }
 }
 

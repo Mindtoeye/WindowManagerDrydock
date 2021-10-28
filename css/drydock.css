@@ -9,6 +9,16 @@
   background: #272626bd;
   border-radius: 5px;
   padding: 4px;
+
+  color: white;
+  font-size: 8pt;
+  font-family: Verdana;
+  overflow: hidden;
+}
+
+.drydockpanel p {
+  padding: 1px;
+  margin: 2px;
 }
 
 .drydockbox {
