@@ -179,6 +179,28 @@
   flex-direction: row;
 }
 
+.macribbon-narrow {
+  margin-left: 2px;
+  margin-right: 2px;
+  margin: 1px;
+  padding: 1px;
+  padding-left: 4px;
+  padding-right: 4px;
+  background: var(--main-window-title);
+  border-radius: 3px 3px 0px 0px;
+  -moz-border-radius: 3px 3px 0px 0px;
+  -webkit-border-radius: 3px 3px 0px 0px;
+  
+  color: #989898;
+  
+  font-size: 8pt;
+
+  display: flex;
+  flex-direction: row;
+
+  height: 16px;
+}
+
 .macribbonselected {
   margin-left: 2px;
   margin-right: 2px;
@@ -326,3 +348,16 @@
   color: white; 
 }
 
+.toolwindowbutton {
+  padding: 0px;
+  margin: 0px;
+  font-size: 8pt;
+  font-family: Arial;
+  font-weight: bold;
+  color: white;
+  line-height: 11pt;  
+}
+
+.toolwindowbutton:hover {
+  color: var(--main-highlight);
+}

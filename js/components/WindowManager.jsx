@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import Window from './Window';
 import Dialog from './Dialog';
+import ToolWindow from './ToolWindow';
 import Scrim from './Scrim';
 import DataTools from './utils/DataTools';
 
@@ -186,6 +187,8 @@ export class WindowManager extends React.Component {
     for (var i=0;i<windowReferences.length;i++) {
       let aTemplate=windowReferences [i];
 
+      //>-----------------------------------------------------
+
       if (aTemplate.type=="window") {
         if (aTemplate.shown==true) {
           //windows.push (<WindowApplication settings={this.props.settings} ref={reference} windowReference={aTemplate} id={aTemplate.id} key={aTemplate.index} title={aTemplate.title} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)} maximizeWindow={this.maximizeWindow.bind(this)}>{aTemplate.window}</WindowApplication>);
@@ -205,15 +208,36 @@ export class WindowManager extends React.Component {
         }
       }
 
+      //>-----------------------------------------------------      
+
       if (aTemplate.type=="dialog") {      
-        if (aTemplate.hasOwnProperty ("modal")==true) {
-          if (aTemplate.modal==true) {
-            modalTop=aTemplate;
+        if (aTemplate.shown==true) { 
+          if (aTemplate.hasOwnProperty ("modal")==true) {
+            if (aTemplate.modal==true) {
+              modalTop=aTemplate;
+            }
+          }
+
+          if (modalTop==null) {
+            windows.push (<Dialog 
+              settings={this.props.settings} // from globalSettings
+              ref={"win"+aTemplate.index} 
+              reference={aTemplate} 
+              id={aTemplate.id} 
+              key={aTemplate.index} 
+              popWindow={this.popWindow.bind(this)} 
+              deleteWindow={this.deleteWindow.bind(this)}>
+                {aTemplate.content}
+            </Dialog>);
           }
         }
+      }
 
-        if (modalTop==null) {
-          windows.push (<Dialog 
+      //>-----------------------------------------------------
+
+      if (aTemplate.type=="toolwindow") { 
+        if (aTemplate.shown==true) {           
+          windows.push (<ToolWindow 
             settings={this.props.settings} // from globalSettings
             ref={"win"+aTemplate.index} 
             reference={aTemplate} 
@@ -222,9 +246,11 @@ export class WindowManager extends React.Component {
             popWindow={this.popWindow.bind(this)} 
             deleteWindow={this.deleteWindow.bind(this)}>
               {aTemplate.content}
-          </Dialog>);
+          </ToolWindow>);
         }
-      }      
+      }
+
+      //>-----------------------------------------------------
     }
 
     if (modalTop!=null) {

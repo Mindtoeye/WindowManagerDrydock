@@ -98,6 +98,20 @@ class DryDock extends Component {
       });
     }
 
+    // 't'
+    if(e.keyCode==84) {
+      console.log ("Showing tool window ...");
+
+      this.appManager.addApplication ({
+        title: "Tool Window",
+        type: "toolwindow",
+        modal: false,
+        centered: true,
+        width: 50,
+        height: 300
+      });
+    }    
+
     // 'w'
     if(e.keyCode==87) {
       console.log ("Showing generic window ...");
@@ -140,6 +154,7 @@ class DryDock extends Component {
           <p>Use the following keys to show and test the various window manager features</p>
           <p>  d: show modal dialog</p>
           <p>  s: show modeless dialog</p>          
+          <p>  t: show tool window</p>          
           <p>  w: add generic window</p>
           <p>  a: add application window</p>
           <p>  c: show confirm modal dialog</p>
