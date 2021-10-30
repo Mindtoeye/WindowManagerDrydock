@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import Window from './Window';
+import Dialog from './Dialog';
 import DataTools from './utils/DataTools';
 
 import '../../css/darktheme.css';
@@ -118,6 +119,15 @@ export class WindowManager extends React.Component {
 
     let list=this.props.appManager.getApps ();
 
+    // This method should be a no-op if we're displaying a modal dialog
+    for (let k=0;k<list.length;k++) {
+      if (list [k].id==targetWindow) {
+        if (list [k].modal==true) {
+          return;
+        }
+      }
+    }
+
     for (let j=0;j<list.length;j++) {
       list [j].selected=false;
     }
@@ -161,19 +171,13 @@ export class WindowManager extends React.Component {
 
       if (aTemplate.type=="window") {
         if (aTemplate.shown==true) {
-          let reference="win"+aTemplate.index;      
           //windows.push (<WindowApplication settings={this.props.settings} ref={reference} windowReference={aTemplate} id={aTemplate.id} key={aTemplate.index} title={aTemplate.title} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)} maximizeWindow={this.maximizeWindow.bind(this)}>{aTemplate.window}</WindowApplication>);
           windows.push (<Window 
             settings={this.props.settings} // from globalSettings
-            ref={reference} 
-            windowReference={aTemplate} 
+            ref={"win"+aTemplate.index} 
+            reference={aTemplate} 
             id={aTemplate.id} 
             key={aTemplate.index} 
-            title={aTemplate.title} 
-            xPos={aTemplate.x+"px"} 
-            yPos={aTemplate.y+"px"} 
-            width={aTemplate.width+"px"} 
-            height={aTemplate.height+"px"} 
             popWindow={this.popWindow.bind(this)} 
             deleteWindow={this.deleteWindow.bind(this)} 
             maximizeWindow={this.maximizeWindow.bind(this)}>
@@ -187,14 +191,25 @@ export class WindowManager extends React.Component {
 
     for (var j=0;j<windowReferences.length;j++) {
       let aTemplate=windowReferences [j];
+      let centered="false";
 
       if (aTemplate.type=="dialog") {
-        windows.push (<Dialog ref={"win"+aTemplate.index} id={aTemplate.id} key={aTemplate.index} zIndex={zIndex*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Dialog>);
+        if (aTemplate.hasOwnProperty (centered)==true) {
+          if (aTemplate.centered==true) {
+            centered="true";
+          }
+        }
+        windows.push (<Dialog 
+          settings={this.props.settings} // from globalSettings
+          ref={"win"+aTemplate.index} 
+          reference={aTemplate} 
+          id={aTemplate.id} 
+          key={aTemplate.index} 
+          popWindow={this.popWindow.bind(this)} 
+          deleteWindow={this.deleteWindow.bind(this)}>
+            {aTemplate.content}
+        </Dialog>);
       }
-
-      if (aTemplate.type=="modal") {
-        windows.push (<Dialog ref={"win"+aTemplate.index} id={aTemplate.id} key={aTemplate.index} zIndex={zIndex*10} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)}>{aTemplate.content}</Dialog>);
-      }     
       
       zIndex++; 
     }    

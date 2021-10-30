@@ -15,10 +15,8 @@ export class WindowDummyContent extends React.Component {
 
     this.state = {
       id: uuidv4(),
-      x: this.props.windowReference.x,
-      y: this.props.windowReference.y,
-      width: this.props.windowReference.width,
-      height: this.props.windowReference.height,
+      width: this.props.reference.width,
+      height: this.props.reference.height,
     };
   }
 

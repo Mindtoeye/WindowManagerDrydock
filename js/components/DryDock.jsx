@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 //import DataTools from './utils/datatools';
 import WindowManager from './WindowManager';
 import ApplicationManager from './ApplicationManager';
+import { uuidv4 } from './utils/uuid';
 
 import '../../css/main.css';
 import '../../css/drydock.css';
@@ -23,7 +24,32 @@ class DryDock extends Component {
     }
        
     this.appManager=new ApplicationManager ();
-    this.appManager.build (); // This should give us at least 1 dummy app
+
+    // Empty dummy window
+    this.appManager.addApplication ({
+      window: null,
+      application: null,
+      icon: null,
+      title: "Empty Window Test 1",
+      type: "window",
+      x: 10,
+      y: 10,
+      width: 320,
+      height: 200
+    });
+
+    // Empty dummy window
+    this.appManager.addApplication ({
+      window: null,
+      application: null,
+      icon: null,
+      title: "Empty Window Test 2",
+      type: "window",
+      x: 50,
+      y: 50,
+      width: 400,
+      height: 320
+    });
   }
 
   /**
@@ -36,6 +62,17 @@ class DryDock extends Component {
     if(e.keyCode==68) {
       console.log ("Showing modal dialog ...");
 
+      this.appManager.addApplication ({
+        window: null,
+        application: null,
+        icon: null,
+        title: "Modal Dialog",
+        type: "dialog",
+        modal: true,
+        centered: true,
+        width: 320,
+        height: 200
+      });
     }
 
     // 's'
@@ -73,6 +110,7 @@ class DryDock extends Component {
         ref="desktop" 
         settings={this.state.globalSettings}
         appManager={this.appManager}>
+
         <div className="drydockpanel">
           <p>Use the following keys to show and tes the various window manager features</p>
           <p>  d: show modal dialog</p>

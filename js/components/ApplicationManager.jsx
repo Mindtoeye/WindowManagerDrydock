@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import ApplicationDriver from './ApplicationDriver';
+import DataTools from './utils/DataTools';
 
 import { uuidv4 } from './utils/uuid';
 
@@ -18,6 +19,9 @@ export default class ApplicationManager extends ApplicationDriver {
 
     this.index=0;
   	this.apps=[];
+    this.dataTools=new DataTools ();
+
+    this.onUpdate=null;
 
   	this.setDriverData=aSetDriverData;
   	this.getDriverData=aGetDriverData;
@@ -79,54 +83,63 @@ export default class ApplicationManager extends ApplicationDriver {
    */
   build () {
   	console.log ("build ()");
-
-  	//this.pushApps ();
-
-    this.addApplication ({
-      window: null,
-      application: null,
-      icon: null,
-      title: "Empty Window Test",
-      type: "window",
-      x: 10,
-      y: 10,
-      width: 320,
-      height: 200,
-      id: uuidv4()
-    });
-
-    this.addApplication ({
-      window: null,
-      application: null,
-      icon: null,
-      title: "Empty Window Test 2",
-      type: "window",
-      x: 50,
-      y: 50,
-      width: 400,
-      height: 320,
-      id: uuidv4()
-    });    
-
-    //this.popApps ();
   }
 
   /**
    *
    */
-  addApplication (anApplication, aCallback) {
-    /*
-    if (this.apps==null) {
-      this.pushApps ();	
-    }
-    */
+  setOnUpdate (aCallback) {
+    this.onUpdate=aCallback;
+  }
+
+  /**
+   *
+   */
+  addApplication (anApplication, aCallback) {    
+    console.log ("addApplication ()");
+
+    console.log (anApplication);
 
     anApplication.shown=true;
     anApplication.maximized=false;
     anApplication.index=this.index;
+    anApplication.id=uuidv4();
+
+    if (anApplication.hasOwnProperty ("modal")==false) {
+      anApplication.modal=false;
+    }    
+
+    if (anApplication.hasOwnProperty ("centered")==false) {
+      console.log ("Window template doesn't have centered attribute");
+      if (anApplication.modal==true) {
+        anApplication.centered=true;
+      } else {
+        anApplication.centered=false;        
+      }
+    }
+
+    if (anApplication.hasOwnProperty ("x")==false) {
+      anApplication.x=this.dataTools.getRandomInt (100);
+    }
+
+    if (anApplication.hasOwnProperty ("y")==false) {
+      anApplication.y=this.dataTools.getRandomInt (100);
+    }    
+
+    if (anApplication.hasOwnProperty ("width")==false) {
+      anApplication.x=320;
+    }
+
+    if (anApplication.hasOwnProperty ("height")==false) {
+      anApplication.y=200;
+    }        
 
     this.index++;
 
     this.apps.push (anApplication);
+
+    if (this.onUpdate) {
+      this.onUpdate ();
+    }
   }
 }

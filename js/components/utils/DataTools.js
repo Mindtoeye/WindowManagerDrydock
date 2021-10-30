@@ -208,6 +208,13 @@ class DataTools {
 
      return (dateTime);
    }
+
+  /**
+   *
+   */
+   getRandomInt(max) {
+     return Math.floor(Math.random() * max);
+   }   
 }
 
 export default DataTools;

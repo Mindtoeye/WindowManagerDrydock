@@ -22,9 +22,9 @@ export class Window extends React.Component {
     super(props);
 
     this.state = {
-      id: props.id,
+      id: props.reference.id,
       count: 0,
-      index: props.zIndex,
+      index: props.reference.zIndex,
       status: "",
       currentResizerId: uuidv4(),
       minimum_size: 20,
@@ -80,7 +80,7 @@ export class Window extends React.Component {
 
     e.preventDefault();
 
-    let element=document.getElementById (this.props.id);
+    let element=document.getElementById (this.props.reference.id);
 
     let original_width = parseFloat(getComputedStyle(element, null).getPropertyValue('width').replace('px', ''));
     let original_height = parseFloat(getComputedStyle(element, null).getPropertyValue('height').replace('px', ''));
@@ -109,7 +109,7 @@ export class Window extends React.Component {
   resize(e) {
     //console.log ("resize ()");
 
-    let element=document.getElementById (this.props.id);
+    let element=document.getElementById (this.props.reference.id);
 
     const width = this.state.original_width + (e.pageX - this.state.original_mouse_x);
     const height = this.state.original_height + (e.pageY - this.state.original_mouse_y);
@@ -157,15 +157,31 @@ export class Window extends React.Component {
    *
    */  
   render() {
-    let xPos=this.props.xPos;
-    let yPos=this.props.yPos;
-    let aWidth=this.props.width;
-    let aHeight=this.props.height;
+    let xPos=this.props.reference.xPos;
+    let yPos=this.props.reference.yPos;
+    let aWidth=this.props.reference.width;
+    let aHeight=this.props.reference.height;
     let anIndex=this.state.index;
-    let title=("Knossys: " + this.props.id);
+    let title=("Knossys: " + this.props.reference.id);
 
-    if (this.props.title) {
-      title=this.props.title;
+    if (this.props.reference.title) {
+      title=this.props.reference.title;
+    }
+
+    if (typeof(this.props.reference.width) == 'number') {
+      aWidth=this.props.reference.width+"px";
+    } else {
+      if (this.props.reference.width.indexOf("px")==-1) {
+        aWidth=this.props.reference.width+"px";
+      }
+    }
+
+    if (typeof(this.props.reference.height) == 'number') {
+      aHeight=this.props.reference.height+"px";
+    } else {
+      if (this.props.reference.height.indexOf("px")==-1) {
+        aHeight=this.props.reference.height+"px";
+      }
     }
 
     let windowContentClass = "windowContent";
@@ -173,12 +189,12 @@ export class Window extends React.Component {
 
     if (windowContent==null) {
       //windowContent=<WindowDummyContent windowReference={this.props.windowReference}/>;
-      windowContent=<WindowGridContent windowReference={this.props.windowReference}/>;
+      windowContent=<WindowGridContent reference={this.props.reference}/>;
     }
 
     return (
      <Draggable handle=".handle" defaultPosition={{x: 0, y: 0}} scale={1}>
-      <div key={this.props.id} id={this.props.id} className="genericWindow" style={{left: xPos, top: yPos, width: aWidth, height: aHeight,zIndex: anIndex}}>
+      <div key={this.props.reference.id} id={this.props.reference.id} className="genericWindow" style={{left: xPos, top: yPos, width: aWidth, height: aHeight,zIndex: anIndex}}>
         <div className="macribbon handle" onClick={() => this.props.popWindow(this.props.id)}>
           <div className="titlecontent">
             {title}
@@ -196,7 +212,7 @@ export class Window extends React.Component {
             </svg>
           </div>
 
-          <div className="standardMaximizeButton" onClick={() => this.props.maximizeWindow(this.props.id)}>          
+          <div className="standardMaximizeButton" onClick={() => this.props.maximizeWindow(this.props.reference.id)}>          
             <svg version="1.1" width="12" height="12" xmlns="http://www.w3.org/2000/svg" x="200px" y="200px" viewBox="0 0 1000 1000" data-copyright="Icon made from http://www.onlinewebfonts.com/icon is licensed by CC BY 3.0">
               <g>
                 <g transform="translate(0.000000,511.000000) scale(0.100000,-0.100000)">
