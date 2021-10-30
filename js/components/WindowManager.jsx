@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import Window from './Window';
 import Dialog from './Dialog';
+import Scrim from './Scrim';
 import DataTools from './utils/DataTools';
 
 import '../../css/darktheme.css';
@@ -26,6 +27,13 @@ export class WindowManager extends React.Component {
     this.dataTools=new DataTools ();
 
     this.onKeyDown=this.onKeyDown.bind (this);
+  }
+
+  /**
+   *
+   */
+  updateWindowStack () {
+    this.setState(this.state);
   }
 
   /**
@@ -153,6 +161,7 @@ export class WindowManager extends React.Component {
    *
    */
   render () {
+    let scrim=<Scrim visible={false}></Scrim>;
     let windows=[];
     let zIndex=1;
 
@@ -163,6 +172,12 @@ export class WindowManager extends React.Component {
 
       if (aTemplate.maximized==true) {
         return (aTemplate.content);
+      }
+
+      if (aTemplate.type=="dialog") {
+        if (aTemplate.mode=="modal") {
+          scrim=<Scrim visible={true}></Scrim>;
+        }
       }
     }
 
@@ -189,34 +204,55 @@ export class WindowManager extends React.Component {
       }
     }
 
+    var modalTop=null;
+
     for (var j=0;j<windowReferences.length;j++) {
       let aTemplate=windowReferences [j];
-      let centered="false";
 
-      if (aTemplate.type=="dialog") {
-        if (aTemplate.hasOwnProperty (centered)==true) {
-          if (aTemplate.centered==true) {
-            centered="true";
+      if (aTemplate.type=="dialog") {      
+        if (aTemplate.hasOwnProperty ("modal")==true) {
+          if (aTemplate.modal==true) {
+            modalTop=aTemplate;
           }
         }
-        windows.push (<Dialog 
-          settings={this.props.settings} // from globalSettings
-          ref={"win"+aTemplate.index} 
-          reference={aTemplate} 
-          id={aTemplate.id} 
-          key={aTemplate.index} 
-          popWindow={this.popWindow.bind(this)} 
-          deleteWindow={this.deleteWindow.bind(this)}>
-            {aTemplate.content}
-        </Dialog>);
+
+        if (modalTop==null) {
+          windows.push (<Dialog 
+            settings={this.props.settings} // from globalSettings
+            ref={"win"+aTemplate.index} 
+            reference={aTemplate} 
+            id={aTemplate.id} 
+            key={aTemplate.index} 
+            popWindow={this.popWindow.bind(this)} 
+            deleteWindow={this.deleteWindow.bind(this)}>
+              {aTemplate.content}
+          </Dialog>);
+        }
       }
       
       zIndex++; 
-    }    
+    }
+
+    if (modalTop!=null) {
+      windows.push (<Scrim visible={true}/>);
+      windows.push (<Dialog 
+        settings={this.props.settings} // from globalSettings
+        ref={"win"+modalTop.index} 
+        reference={modalTop} 
+        id={modalTop.id} 
+        key={modalTop.index} 
+        popWindow={this.popWindow.bind(this)} 
+        deleteWindow={this.deleteWindow.bind(this)}>
+          {modalTop.content}
+      </Dialog>);
+    }
 
     let windowClass="desktopContent";
 
-    return (<div tabIndex="0" onKeyDown={this.onKeyDown} className={windowClass}>{this.props.children}{windows}</div>);
+    return (<div tabIndex="0" onKeyDown={this.onKeyDown} className={windowClass}>      
+      {windows}
+      {this.props.children}
+    </div>);
   }
 }
 
