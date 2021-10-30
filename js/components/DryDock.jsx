@@ -25,6 +25,7 @@ class DryDock extends Component {
        
     this.appManager=new ApplicationManager ();
 
+    /*
     // Empty dummy window
     this.appManager.addApplication ({
       window: null,
@@ -50,7 +51,18 @@ class DryDock extends Component {
       width: 400,
       height: 320
     });
+    */
+
+    this.onKeyDown=this.onKeyDown.bind (this);
+    this.updateWindowStack=this.updateWindowStack.bind (this);
   }
+
+  /**
+   * This will go into the app manager
+   */
+  updateWindowStack () {
+    this.setState(this.state);
+  }  
 
   /**
    *
@@ -63,9 +75,6 @@ class DryDock extends Component {
       console.log ("Showing modal dialog ...");
 
       this.appManager.addApplication ({
-        window: null,
-        application: null,
-        icon: null,
         title: "Modal Dialog",
         type: "dialog",
         modal: true,
@@ -79,12 +88,26 @@ class DryDock extends Component {
     if(e.keyCode==83) {
       console.log ("Showing modeless dialog ...");
 
+      this.appManager.addApplication ({
+        title: "Modeless Dialog",
+        type: "dialog",
+        modal: false,
+        centered: true,
+        width: 320,
+        height: 200
+      });
     }
 
     // 'w'
     if(e.keyCode==87) {
       console.log ("Showing generic window ...");
 
+      this.appManager.addApplication ({
+        title: "Generic Window",
+        type: "window",
+        width: 320,
+        height: 200
+      });
     }        
 
     // 'a'
@@ -96,6 +119,8 @@ class DryDock extends Component {
     if(e.keyCode==67) {
       console.log ("Showing confirm dialog ...");
     }        
+
+    this.updateWindowStack ();
   }
 
   /**
@@ -112,11 +137,11 @@ class DryDock extends Component {
         appManager={this.appManager}>
 
         <div className="drydockpanel">
-          <p>Use the following keys to show and tes the various window manager features</p>
+          <p>Use the following keys to show and test the various window manager features</p>
           <p>  d: show modal dialog</p>
           <p>  s: show modeless dialog</p>          
-          <p>  w: show generic window</p>
-          <p>  a: show application window</p>
+          <p>  w: add generic window</p>
+          <p>  a: add application window</p>
           <p>  c: show confirm modal dialog</p>
         </div>
       </WindowManager>

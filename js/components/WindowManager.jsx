@@ -130,8 +130,11 @@ export class WindowManager extends React.Component {
     // This method should be a no-op if we're displaying a modal dialog
     for (let k=0;k<list.length;k++) {
       if (list [k].id==targetWindow) {
-        if (list [k].modal==true) {
-          return;
+        if (list [k].type=="dialog") {          
+          if (list [k].modal==true) {
+            //console.log ("Modal dialog clicked, nop");
+            return;
+          }
         }
       }
     }
@@ -152,9 +155,6 @@ export class WindowManager extends React.Component {
         return;
       }
     }
-
-    //this.props.list (updated);
-    //this.props.appManager.setApps (updated);
   }
 
   /**
@@ -181,6 +181,8 @@ export class WindowManager extends React.Component {
       }
     }
 
+    var modalTop=null;
+
     for (var i=0;i<windowReferences.length;i++) {
       let aTemplate=windowReferences [i];
 
@@ -202,12 +204,6 @@ export class WindowManager extends React.Component {
           zIndex++;
         }
       }
-    }
-
-    var modalTop=null;
-
-    for (var j=0;j<windowReferences.length;j++) {
-      let aTemplate=windowReferences [j];
 
       if (aTemplate.type=="dialog") {      
         if (aTemplate.hasOwnProperty ("modal")==true) {
@@ -228,13 +224,11 @@ export class WindowManager extends React.Component {
               {aTemplate.content}
           </Dialog>);
         }
-      }
-      
-      zIndex++; 
+      }      
     }
 
     if (modalTop!=null) {
-      windows.push (<Scrim visible={true}/>);
+      windows.push (<Scrim key={-1} visible={true}/>);
       windows.push (<Dialog 
         settings={this.props.settings} // from globalSettings
         ref={"win"+modalTop.index} 

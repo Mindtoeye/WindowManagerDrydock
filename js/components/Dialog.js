@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import Draggable, {DraggableCore} from 'react-draggable';
+
 /**
  *
  */
@@ -51,6 +53,13 @@ export class Dialog extends React.Component {
     let aHeight=this.props.reference.height;
     let anIndex=this.state.index;
     let className="dialogWindow";
+    let modal=true;
+
+    if (this.props.reference.hasOwnProperty ("modal")==true) {    
+      if (this.props.reference.modal==false) {
+        modal=false;
+      }
+    }
 
     let title=("Knossys: " + this.props.reference.id);
 
@@ -85,6 +94,24 @@ export class Dialog extends React.Component {
         aHeight=this.props.reference.height+"px";
       }
     }    
+
+    if (modal==false) {
+      return (<Draggable handle=".handle" defaultPosition={{x: 0, y: 0}} scale={1}>
+        <div id={this.props.reference.id} className={className} style={{left: xPos, top: yPos, width: aWidth, height: aHeight, zIndex: anIndex}}>
+          <div className="macribbon handle" onClick={() => this.props.popWindow(this.props.reference.id)}>
+            <div className="titlecontent">
+              {title}
+            </div>
+          </div>
+          <div className="dialogContent">
+            {this.props.children}
+          </div>
+          <div className="dialogControls">
+            <button className="largeButton" onClick={() => this.props.deleteWindow(this.props.reference.id)}>Ok</button>
+          </div>      
+        </div>
+      </Draggable>);
+    }
 
     return (<div id={this.props.reference.id} className={className} style={{left: xPos, top: yPos, width: aWidth, height: aHeight, zIndex: anIndex}}>
       <div className="macribbon" onClick={() => this.props.popWindow(this.props.reference.id)}>
