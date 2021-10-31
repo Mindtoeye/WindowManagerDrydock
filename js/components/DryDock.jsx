@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-//import DataTools from './utils/datatools';
 import WindowManager from './WindowManager';
 import ApplicationManager from './ApplicationManager';
 import { uuidv4 } from './utils/uuid';
@@ -25,34 +24,6 @@ class DryDock extends Component {
        
     this.appManager=new ApplicationManager ();
 
-    /*
-    // Empty dummy window
-    this.appManager.addApplication ({
-      window: null,
-      application: null,
-      icon: null,
-      title: "Empty Window Test 1",
-      type: "window",
-      x: 10,
-      y: 10,
-      width: 320,
-      height: 200
-    });
-
-    // Empty dummy window
-    this.appManager.addApplication ({
-      window: null,
-      application: null,
-      icon: null,
-      title: "Empty Window Test 2",
-      type: "window",
-      x: 50,
-      y: 50,
-      width: 400,
-      height: 320
-    });
-    */
-
     this.onKeyDown=this.onKeyDown.bind (this);
     this.updateWindowStack=this.updateWindowStack.bind (this);
   }
@@ -68,7 +39,7 @@ class DryDock extends Component {
    *
    */
   onKeyDown (e) {
-    //console.log ("onKeyDown ("+e.keyCode+")");
+    console.log ("onKeyDown ("+e.keyCode+")");
 
     // 'd'
     if(e.keyCode==68) {
@@ -127,7 +98,26 @@ class DryDock extends Component {
     // 'a'
     if(e.keyCode==65) {
       console.log ("Showing application window ...");
+
+      this.appManager.addApplication ({
+        title: "Application",
+        type: "applicationwindow",
+        width: 400,
+        height: 300
+      });      
     }
+
+    // 'b'
+    if(e.keyCode==66) {
+      console.log ("Showing basic application window ...");
+
+      this.appManager.addApplication ({
+        title: "Basic Application",
+        type: "basicapplicationwindow",
+        width: 400,
+        height: 300
+      });      
+    }    
 
     // 'c'
     if(e.keyCode==67) {
@@ -146,7 +136,6 @@ class DryDock extends Component {
     return (
      <WindowManager 
         onKeyDown={this.onKeyDown}
-        ref="desktop" 
         settings={this.state.globalSettings}
         appManager={this.appManager}>
 
@@ -156,7 +145,8 @@ class DryDock extends Component {
           <p>  s: show modeless dialog</p>          
           <p>  t: show tool window</p>          
           <p>  w: add generic window</p>
-          <p>  a: add application window</p>
+          <p>  a: add application</p>
+          <p>  b: add basic application</p>
           <p>  c: show confirm modal dialog</p>
         </div>
       </WindowManager>

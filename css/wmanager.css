@@ -115,12 +115,12 @@
 
 .windowContent {
   color: var(--main-window-text);
-  margin: 2px;
-  padding: 2px;
+  margin: 0px;
+  padding: 0px;
   /*background: var(--main-window-content);*/
   /*border: 1px inset #717171;*/
   flex: 2;
-  display: flex;  
+  display: flex;
   overflow: hidden;
   /*background: #605e5e;*/
 }
@@ -133,6 +133,11 @@
   margin-left: 2px;
   margin-right: 2px;  
   overflow: hidden;
+}
+
+.windowContentCols {
+  display: flex;
+  flex-direction: row;
 }
 
 .windowMain {
@@ -360,4 +365,42 @@
 
 .toolwindowbutton:hover {
   color: var(--main-highlight);
+}
+
+.mainmenu {
+  margin: 2px;
+  flex: 0;
+  backface-visibility: hidden;
+  position: relative;
+  cursor: pointer;
+  white-space: nowrap;
+  /* background: linear-gradient(0deg,#303030 0%,#3d3d3d 50%,#474747 100%); */
+  /*border-radius: 3px;*/
+  border: 1px solid #222;
+  border-width: 1px 1px 1px 1px;
+  padding: 0px 4px 0px 4px;
+  color: #fffced;
+  font-size: 11px;
+  line-height: 19px;
+  font-family: Verdana;
+  /* font-weight: 900; */
+  font-style: normal;
+  background: #423f3f;
+}
+
+.apptoolbar {
+  color: var(--main-window-text);
+  background: var(--main-window-content);
+  margin: 2px;
+  padding: 2px;
+  flex: 0;
+  width: 50px;
+}
+
+.center {
+  flex: 1;
+}
+
+.right {
+  flex: 0;
 }

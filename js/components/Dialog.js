@@ -6,7 +6,7 @@ import Draggable, {DraggableCore} from 'react-draggable';
 /**
  *
  */
-export class Dialog extends React.Component {
+class Dialog extends React.Component {
 
   /**
   *

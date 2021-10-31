@@ -14,7 +14,7 @@ export default class ApplicationManager extends ApplicationDriver {
   /**
    *
    */	
-  constructor (aSetDriverData,aGetDriverData,aGetDriverReference,aSetAppData,aGetAppData,aGetAppReference) {
+  constructor () {
   	super ();
 
     this.index=0;
@@ -22,13 +22,6 @@ export default class ApplicationManager extends ApplicationDriver {
     this.dataTools=new DataTools ();
 
     this.onUpdate=null;
-
-  	this.setDriverData=aSetDriverData;
-  	this.getDriverData=aGetDriverData;
-  	this.getDriverReference=aGetDriverReference;
-  	this.setAppData=aSetAppData;
-  	this.getAppData=aGetAppData;
-  	this.getAppReference=aGetAppReference;
   }
 
   /**
@@ -76,13 +69,6 @@ export default class ApplicationManager extends ApplicationDriver {
    */
   setApps (aSet) {
     this.apps=aSet;
-  }
-
-  /**
-   *
-   */
-  build () {
-  	console.log ("build ()");
   }
 
   /**

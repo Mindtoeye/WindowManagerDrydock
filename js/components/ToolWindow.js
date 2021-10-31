@@ -67,18 +67,6 @@ export class ToolWindow extends React.Component {
       title=this.props.reference.title;
     }    
 
-    if (this.props.reference.centered) {
-      if (typeof(this.props.reference.centered) == 'boolean') {
-        if (this.props.reference.centered==true) {
-          className="dialogWindow centered";
-        }
-      } else {
-        if (this.props.reference.centered=="true") {
-          className="dialogWindow centered";
-        }
-      }
-    }
-
     if (typeof(this.props.reference.width) == 'number') {
       aWidth=this.props.reference.width+"px";
     } else {

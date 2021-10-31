@@ -4,6 +4,8 @@ import ReactDOM from "react-dom";
 import Window from './Window';
 import Dialog from './Dialog';
 import ToolWindow from './ToolWindow';
+import WindowBasicApplication from './WindowBasicApplication';
+import WindowApplication from './WindowApplication';
 import Scrim from './Scrim';
 import DataTools from './utils/DataTools';
 
@@ -249,6 +251,40 @@ export class WindowManager extends React.Component {
           </ToolWindow>);
         }
       }
+
+      //>-----------------------------------------------------
+
+      if (aTemplate.type=="applicationwindow") { 
+        if (aTemplate.shown==true) {           
+          windows.push (<WindowApplication 
+            settings={this.props.settings} // from globalSettings
+            ref={"win"+aTemplate.index} 
+            reference={aTemplate} 
+            id={aTemplate.id} 
+            key={aTemplate.index} 
+            popWindow={this.popWindow.bind(this)} 
+            deleteWindow={this.deleteWindow.bind(this)}>
+              {aTemplate.content}
+          </WindowApplication>);
+        }
+      }
+
+      //>-----------------------------------------------------
+
+      if (aTemplate.type=="basicapplicationwindow") { 
+        if (aTemplate.shown==true) {           
+          windows.push (<WindowBasicApplication 
+            settings={this.props.settings} // from globalSettings
+            ref={"win"+aTemplate.index} 
+            reference={aTemplate} 
+            id={aTemplate.id} 
+            key={aTemplate.index} 
+            popWindow={this.popWindow.bind(this)} 
+            deleteWindow={this.deleteWindow.bind(this)}>
+              {aTemplate.content}
+          </WindowBasicApplication>);
+        }
+      }      
 
       //>-----------------------------------------------------
     }
