@@ -1,18 +1,18 @@
 {
-  "name": "WindowManagerDrydock",
+  "name": "VirtualDesktopDrydock",
   "version": "1.0.0",
-  "description": "Development and testing of the Proscenium window manager codebase",
+  "description": "Development and testing of the Proscenium desktop paradigm",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack -p --progress --config webpack.config.js",
+    "build": "webpack --progress --config webpack.config.js",
     "dev-build": "webpack --progress -d --config webpack.config.js",
     "watch": "webpack --progress -d --config webpack.config.js --watch",
     "start": "webpack-dev-server --mode development --progress --config webpack.config.js --host 0.0.0.0 --port 8083"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Mindtoeye/knossys-window-manager-drydock.git"
+    "url": "git+https://github.com/Knossys/AccordionPropertySheet.git"
   },
   "keywords": [
     "react",
@@ -22,36 +22,37 @@
   "author": "Knossys",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Mindtoeye/knossys-window-manager-drydock.git"
+    "url": "https://github.com/Knossys/AccordionPropertySheet/wiki"
   },
-  "homepage": "https://github.com/Mindtoeye/knossys-window-manager-drydock/wiki",
+  "homepage": "https://github.com/Knossys/AccordionPropertySheet/wiki",
   "devDependencies": {
-    "@babel/preset-env": "^7.6.3",
+    "@babel/cli": "^7.16.0",
+    "@babel/preset-env": "^7.15.8",
+    "@babel/preset-react": "^7.16.0",
+    "@emotion/css": "^11.5.0",
+    "babel": "^6.23.0",
     "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-3": "^6.24.1",
-    "emotion": "^10.0.17",
-    "file-loader": "^4.2.0",
-    "html-webpack-plugin": "^3.2.0",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.5.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "is-hotkey": "^0.1.6",
     "react": "^16.9.0",
     "react-dom": "^16.12.0",
     "react-json-tree": "^0.11.2",
+    "sass": "^1.43.4",
+    "sass-loader": "^12.3.0",
     "slate": "^0.47.8",
     "slate-react": "^0.22.9",
-    "webpack": "^4.40.2",
-    "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.8.1"
+    "webpack": "^5.64.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.3.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.5",
     "bootstrap": "^4.3.1",
-    "css-loader": "^3.2.0",
     "history": "^4.10.1",
     "immutable": "^4.0.0-rc.12",
     "rc-slider": "^8.7.1",
