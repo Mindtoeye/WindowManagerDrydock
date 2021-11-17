@@ -115,14 +115,11 @@
 
 .windowContent {
   color: var(--main-window-text);
-  margin: 0px;
+  margin: 2px;
   padding: 0px;
-  /*background: var(--main-window-content);*/
-  /*border: 1px inset #717171;*/
   flex: 2;
   display: flex;
   overflow: hidden;
-  /*background: #605e5e;*/
 }
 
 .windowAppContent {
@@ -391,10 +388,13 @@
 .apptoolbar {
   color: var(--main-window-text);
   background: var(--main-window-content);
-  margin: 2px;
+  margin: 0px;
+  margin-right: 2px;
   padding: 2px;
   flex: 0;
-  width: 50px;
+  width: 32px;
+  min-width: 32px;
+  border: 1px solid #626262;
 }
 
 .center {
@@ -403,4 +403,10 @@
 
 .right {
   flex: 0;
+  min-width: 150px;
+  background: #525252;
+  padding: 2px;
+  margin: 0px;
+  margin-left: 2px;
+  border: 1px solid #626262;
 }
