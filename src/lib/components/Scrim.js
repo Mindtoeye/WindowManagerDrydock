@@ -1,6 +1,6 @@
 import React from "react";
 
-import '../../css/wmanager.css';
+import './styles/wmanager.css';
 
 /**
  *

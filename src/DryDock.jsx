@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 
-import WindowManager from './WindowManager';
-import ApplicationManager from './ApplicationManager';
-import { uuidv4 } from './utils/uuid';
+import WindowManager from './lib/components/WindowManager';
+import ApplicationManager from './lib/components/ApplicationManager';
+import { uuidv4 } from './lib/components/utils/uuid';
 
-import '../../css/main.css';
-import '../../css/drydock.css';
+import { KnossysInfoPanel, KButton } from '@knossys/knossys-ui-core';
+
+import '../css/main.css';
+import '../css/drydock.css';
 
 /**
  * 

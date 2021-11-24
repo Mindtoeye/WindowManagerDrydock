@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import ResizablePanels from "./ResizablePanels";
 
-import "../css/wmgr/resizable.css";
+import "./styles/wmgr/resizable.css";
 
 /**
  *

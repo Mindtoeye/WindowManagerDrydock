@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 
 import Draggable, {DraggableCore} from 'react-draggable';
 
+import { KButton } from '@knossys/knossys-ui-core';
+
 /**
  *
  */
@@ -107,7 +109,7 @@ class Dialog extends React.Component {
             {this.props.children}
           </div>
           <div className="dialogControls">
-            <button className="largeButton" onClick={() => this.props.deleteWindow(this.props.reference.id)}>Ok</button>
+            <KButton onClick={() => this.props.deleteWindow(this.props.reference.id)}>Ok</KButton>
           </div>      
         </div>
       </Draggable>);

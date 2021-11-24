@@ -9,8 +9,8 @@ import WindowApplication from './WindowApplication';
 import Scrim from './Scrim';
 import DataTools from './utils/DataTools';
 
-import '../../css/darktheme.css';
-import '../../css/wmanager.css';
+import './styles/darktheme.css';
+import './styles/wmanager.css';
 
 /**
  *

@@ -6,9 +6,9 @@ import WindowDummyContent from './WindowDummyContent';
 import WindowGridContent from './WindowGridContent';
 import { uuidv4 } from './utils/uuid';
 
-import '../../css/wmanager.css';
+import './styles/wmanager.css';
 
-import gripper from '../../css/images/icons/resize.png';
+import gripper from './styles/images/icons/resize.png';
 
 /**
  *
