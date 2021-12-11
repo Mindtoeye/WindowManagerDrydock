@@ -367,12 +367,12 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
         }, modalTop.content));
       }
 
-      var windowClass = "desktopContent";
+      var windowClass = "desktopContent " + this.props.classes;
       return /*#__PURE__*/_react["default"].createElement("div", {
         tabIndex: "0",
         onKeyDown: this.onKeyDown,
         className: windowClass
-      }, windows, this.props.children);
+      }, this.props.children, windows);
     }
   }]);
 

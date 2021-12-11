@@ -35,6 +35,13 @@ export class WindowManager extends React.Component {
   /**
    *
    */
+  componentDidUpdate(prevProps) {
+    console.log ("componentDidUpdate ()");
+  }
+
+  /**
+   *
+   */
   updateWindowStack () {
     this.setState(this.state);
   }
@@ -303,11 +310,11 @@ export class WindowManager extends React.Component {
       </Dialog>);
     }
 
-    let windowClass="desktopContent";
+    let windowClass="desktopContent " + this.props.classes;
 
     return (<div tabIndex="0" onKeyDown={this.onKeyDown} className={windowClass}>      
-      {windows}
       {this.props.children}
+      {windows}
     </div>);
   }
 }
