@@ -24,10 +24,11 @@ class DryDock extends Component {
       globalSettings: {}
     }
        
-    this.appManager=new ApplicationManager ();
-
     this.onKeyDown=this.onKeyDown.bind (this);
     this.updateWindowStack=this.updateWindowStack.bind (this);
+
+    this.appManager=new ApplicationManager ();
+    this.appManager.setOnUpdate (this.updateWindowStack);
   }
 
   /**
@@ -126,6 +127,13 @@ class DryDock extends Component {
       console.log ("Showing confirm dialog ...");
     }        
 
+    // 'l'
+    if(e.keyCode==76) {
+      console.log ("Listing windows ...");
+
+      this.appManager.listWindows();
+    }            
+
     this.updateWindowStack ();
   }
 
@@ -150,6 +158,7 @@ class DryDock extends Component {
           <p>  a: add application</p>
           <p>  b: add basic application</p>
           <p>  c: show confirm modal dialog</p>
+          <p>  l: list windows</p>
         </div>
       </WindowManager>
     );

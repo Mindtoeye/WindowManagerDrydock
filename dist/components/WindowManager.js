@@ -25,8 +25,6 @@ var _Scrim = _interopRequireDefault(require("./Scrim"));
 
 var _DataTools = _interopRequireDefault(require("./utils/DataTools"));
 
-require("./styles/darktheme.css");
-
 require("./styles/wmanager.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -69,7 +67,8 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      pop: 0
+      pop: 0,
+      trigger: 0
     };
     _this.dataTools = new _DataTools["default"]();
     _this.onKeyDown = _this.onKeyDown.bind(_assertThisInitialized(_this));
@@ -81,9 +80,28 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
 
 
   _createClass(WindowManager, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      console.log("componentDidUpdate ()");
+
+      if (this.props.trigger) {
+        if (this.props.trigger != prevProps.trigger) {
+          this.setState({
+            trigger: this.props.trigger
+          });
+        }
+      }
+    }
+    /**
+     *
+     */
+
+  }, {
     key: "updateWindowStack",
     value: function updateWindowStack() {
-      this.setState(this.state);
+      this.setState({
+        trigger: this.state.trigger + 1
+      });
     }
     /**
      *
@@ -229,6 +247,8 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      console.log("render()");
+
       var scrim = /*#__PURE__*/_react["default"].createElement(_Scrim["default"], {
         visible: false
       });
@@ -262,6 +282,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
           if (_aTemplate.shown == true) {
             //windows.push (<WindowApplication settings={this.props.settings} ref={reference} windowReference={aTemplate} id={aTemplate.id} key={aTemplate.index} title={aTemplate.title} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)} maximizeWindow={this.maximizeWindow.bind(this)}>{aTemplate.window}</WindowApplication>);
             windows.push( /*#__PURE__*/_react["default"].createElement(_Window["default"], {
+              trigger: this.state.trigger,
               settings: this.props.settings // from globalSettings
               ,
               ref: "win" + _aTemplate.index,
@@ -287,6 +308,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
 
             if (modalTop == null) {
               windows.push( /*#__PURE__*/_react["default"].createElement(_Dialog["default"], {
+                trigger: this.state.trigger,
                 settings: this.props.settings // from globalSettings
                 ,
                 ref: "win" + _aTemplate.index,
@@ -304,6 +326,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
         if (_aTemplate.type == "toolwindow") {
           if (_aTemplate.shown == true) {
             windows.push( /*#__PURE__*/_react["default"].createElement(_ToolWindow["default"], {
+              trigger: this.state.trigger,
               settings: this.props.settings // from globalSettings
               ,
               ref: "win" + _aTemplate.index,
@@ -320,6 +343,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
         if (_aTemplate.type == "applicationwindow") {
           if (_aTemplate.shown == true) {
             windows.push( /*#__PURE__*/_react["default"].createElement(_WindowApplication["default"], {
+              trigger: this.state.trigger,
               settings: this.props.settings // from globalSettings
               ,
               ref: "win" + _aTemplate.index,
@@ -336,6 +360,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
         if (_aTemplate.type == "basicapplicationwindow") {
           if (_aTemplate.shown == true) {
             windows.push( /*#__PURE__*/_react["default"].createElement(_WindowBasicApplication["default"], {
+              trigger: this.state.trigger,
               settings: this.props.settings // from globalSettings
               ,
               ref: "win" + _aTemplate.index,
@@ -356,6 +381,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
           visible: true
         }));
         windows.push( /*#__PURE__*/_react["default"].createElement(_Dialog["default"], {
+          trigger: this.state.trigger,
           settings: this.props.settings // from globalSettings
           ,
           ref: "win" + modalTop.index,
@@ -367,7 +393,12 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
         }, modalTop.content));
       }
 
-      var windowClass = "desktopContent " + this.props.classes;
+      var windowClass = "knossys-dark desktopContent";
+
+      if (this.props.classes) {
+        windowClass = "knossys-dark desktopContent " + this.props.classes;
+      }
+
       return /*#__PURE__*/_react["default"].createElement("div", {
         tabIndex: "0",
         onKeyDown: this.onKeyDown,

@@ -41,6 +41,8 @@ export class Window extends React.Component {
     this.stopResize=this.stopResize.bind(this);    
 
     this.maximizeWindow=this.maximizeWindow.bind(this);    
+
+    this.onClose=this.onClose.bind(this);    
   }
 
   /**
@@ -55,6 +57,19 @@ export class Window extends React.Component {
     // resizable
     if (currentResizer!=null) {
       currentResizer.addEventListener('mousedown', this.resizeStart);
+    }
+  }
+
+  /**
+   *
+   */
+  onClose (e,anId) {
+    console.log ("onClose ("+anId+")");
+
+    if (this.props.appManager) {
+      this.props.appManager.deleteApp (anId);
+    } else {
+      console.log ("Error: no application manager available");
     }
   }
 
@@ -194,13 +209,13 @@ export class Window extends React.Component {
 
     return (
      <Draggable handle=".handle" defaultPosition={{x: 0, y: 0}} scale={1}>
-      <div key={this.props.reference.id} id={this.props.reference.id} className="genericWindow" style={{left: xPos, top: yPos, width: aWidth, height: aHeight,zIndex: anIndex}}>
+      <div key={this.props.reference.id} id={this.props.reference.id} className="genericWindow" onClick={() => this.props.popWindow(this.props.id)} style={{left: xPos, top: yPos, width: aWidth, height: aHeight,zIndex: anIndex}}>
         <div className="macribbon handle" onClick={() => this.props.popWindow(this.props.id)}>
           <div className="titlecontent">
             {title}
           </div>
-          <div className="standardCloseButton" onClick={() => this.props.deleteWindow(this.props.id)}>
-            <svg width="12" height="12" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <div className="standardCloseButton" onClick={(e) => this.onClose(e,this.props.reference.id)}>
+            <svg width="12" height="12" version="1.1">
               <line x1="1" y1="11" 
                     x2="11" y2="1" 
                     stroke="white" 

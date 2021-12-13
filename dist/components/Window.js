@@ -265,6 +265,9 @@ var Window = /*#__PURE__*/function (_React$Component) {
         key: this.props.reference.id,
         id: this.props.reference.id,
         className: "genericWindow",
+        onClick: function onClick() {
+          return _this3.props.popWindow(_this3.props.id);
+        },
         style: {
           left: xPos,
           top: yPos,

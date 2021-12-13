@@ -20,7 +20,22 @@ class Dialog extends React.Component {
       id: props.id,
       count: 0, 
       index: props.reference.zIndex
-    };    
+    };
+
+    this.onClose=this.onClose.bind(this);
+  }
+
+  /**
+   *
+   */
+  onClose (e,anId) {
+    console.log ("onClose ("+anId+")");
+
+    if (this.props.appManager) {
+      this.props.appManager.deleteApp (anId);
+    } else {
+      console.log ("Error: no application manager available");
+    }
   }
 
   /**
@@ -99,7 +114,7 @@ class Dialog extends React.Component {
 
     if (modal==false) {
       return (<Draggable handle=".handle" defaultPosition={{x: 0, y: 0}} scale={1}>
-        <div id={this.props.reference.id} className={className} style={{left: xPos, top: yPos, width: aWidth, height: aHeight, zIndex: anIndex}}>
+        <div id={this.props.reference.id} className={className} onClick={() => this.props.popWindow(this.props.id)} style={{left: xPos, top: yPos, width: aWidth, height: aHeight, zIndex: anIndex}}>
           <div className="macribbon handle" onClick={() => this.props.popWindow(this.props.reference.id)}>
             <div className="titlecontent">
               {title}
@@ -109,13 +124,13 @@ class Dialog extends React.Component {
             {this.props.children}
           </div>
           <div className="dialogControls">
-            <KButton onClick={() => this.props.deleteWindow(this.props.reference.id)}>Ok</KButton>
+            <KButton onClick={(e) => this.onClose(e,this.props.reference.id)}>Ok</KButton>
           </div>      
         </div>
       </Draggable>);
     }
 
-    return (<div id={this.props.reference.id} className={className} style={{left: xPos, top: yPos, width: aWidth, height: aHeight, zIndex: anIndex}}>
+    return (<div id={this.props.reference.id} className={className} onClick={() => this.props.popWindow(this.props.id)}style={{left: xPos, top: yPos, width: aWidth, height: aHeight, zIndex: anIndex}}>
       <div className="macribbon" onClick={() => this.props.popWindow(this.props.reference.id)}>
         {title}
       </div>
@@ -123,7 +138,7 @@ class Dialog extends React.Component {
         {this.props.children}
       </div>
       <div className="dialogControls">
-        <button className="largeButton" onClick={() => this.props.deleteWindow(this.props.reference.id)}>Ok</button>
+        <button className="largeButton" onClick={(e) => this.onClose(e,this.props.reference.id)}>Ok</button>
       </div>      
     </div>);
   }

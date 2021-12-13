@@ -24,7 +24,8 @@ export class WindowManager extends React.Component {
     super(props);
 
     this.state={
-      pop: 0
+      pop: 0,
+      trigger: 0
     };
 
     this.dataTools=new DataTools ();
@@ -36,14 +37,23 @@ export class WindowManager extends React.Component {
    *
    */
   componentDidUpdate(prevProps) {
-    console.log ("componentDidUpdate ()");
+    console.log ("componentDidUpdate ()");    
+    if (this.props.trigger) {
+      if (this.props.trigger!=prevProps.trigger) {
+        this.setState ({
+          trigger: this.props.trigger
+        });
+      }
+    }
   }
 
   /**
    *
    */
   updateWindowStack () {
-    this.setState(this.state);
+    this.setState({
+      trigger: this.state.trigger+1
+    });
   }
 
   /**
@@ -171,6 +181,8 @@ export class WindowManager extends React.Component {
    *
    */
   render () {
+    console.log ("render()");
+
     let scrim=<Scrim visible={false}></Scrim>;
     let windows=[];
     let zIndex=1;
@@ -202,6 +214,8 @@ export class WindowManager extends React.Component {
         if (aTemplate.shown==true) {
           //windows.push (<WindowApplication settings={this.props.settings} ref={reference} windowReference={aTemplate} id={aTemplate.id} key={aTemplate.index} title={aTemplate.title} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)} maximizeWindow={this.maximizeWindow.bind(this)}>{aTemplate.window}</WindowApplication>);
           windows.push (<Window 
+            appManager={this.props.appManager}
+            trigger={this.state.trigger}
             settings={this.props.settings} // from globalSettings
             ref={"win"+aTemplate.index} 
             reference={aTemplate} 
@@ -229,6 +243,8 @@ export class WindowManager extends React.Component {
 
           if (modalTop==null) {
             windows.push (<Dialog 
+              appManager={this.props.appManager}
+              trigger={this.state.trigger}              
               settings={this.props.settings} // from globalSettings
               ref={"win"+aTemplate.index} 
               reference={aTemplate} 
@@ -247,6 +263,8 @@ export class WindowManager extends React.Component {
       if (aTemplate.type=="toolwindow") { 
         if (aTemplate.shown==true) {           
           windows.push (<ToolWindow 
+            appManager={this.props.appManager}
+            trigger={this.state.trigger}
             settings={this.props.settings} // from globalSettings
             ref={"win"+aTemplate.index} 
             reference={aTemplate} 
@@ -264,6 +282,8 @@ export class WindowManager extends React.Component {
       if (aTemplate.type=="applicationwindow") { 
         if (aTemplate.shown==true) {           
           windows.push (<WindowApplication 
+            appManager={this.props.appManager}            
+            trigger={this.state.trigger}
             settings={this.props.settings} // from globalSettings
             ref={"win"+aTemplate.index} 
             reference={aTemplate} 
@@ -281,6 +301,8 @@ export class WindowManager extends React.Component {
       if (aTemplate.type=="basicapplicationwindow") { 
         if (aTemplate.shown==true) {           
           windows.push (<WindowBasicApplication 
+            appManager={this.props.appManager}            
+            trigger={this.state.trigger}
             settings={this.props.settings} // from globalSettings
             ref={"win"+aTemplate.index} 
             reference={aTemplate} 
@@ -299,6 +321,8 @@ export class WindowManager extends React.Component {
     if (modalTop!=null) {
       windows.push (<Scrim key={-1} visible={true}/>);
       windows.push (<Dialog 
+        appManager={this.props.appManager}        
+        trigger={this.state.trigger}
         settings={this.props.settings} // from globalSettings
         ref={"win"+modalTop.index} 
         reference={modalTop} 

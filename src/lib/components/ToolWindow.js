@@ -19,6 +19,21 @@ export class ToolWindow extends React.Component {
       count: 0, 
       index: props.reference.zIndex
     };    
+
+    this.onClose=this.onClose.bind(this);    
+  }
+
+  /**
+   *
+   */
+  onClose (e,anId) {
+    console.log ("onClose ("+anId+")");
+
+    if (this.props.appManager) {
+      this.props.appManager.deleteApp (anId);
+    } else {
+      console.log ("Error: no application manager available");
+    }
   }
 
   /**
@@ -84,12 +99,12 @@ export class ToolWindow extends React.Component {
     }    
 
     return (<Draggable handle=".handle" defaultPosition={{x: 0, y: 0}} scale={1}>
-      <div id={this.props.reference.id} className={className} style={{left: xPos, top: yPos, width: aWidth, height: aHeight, zIndex: anIndex}}>
+      <div id={this.props.reference.id} className={className} onClick={() => this.props.popWindow(this.props.id)} style={{left: xPos, top: yPos, width: aWidth, height: aHeight, zIndex: anIndex}}>
         <div className="macribbon-narrow handle" onClick={() => this.props.popWindow(this.props.reference.id)}>
           <div className="titlecontent">
             {title}
           </div>
-          <div className="toolwindowbutton">
+          <div className="toolwindowbutton" onClick={(e) => this.onClose(e,this.props.reference.id)}>
           X
           </div>
         </div>

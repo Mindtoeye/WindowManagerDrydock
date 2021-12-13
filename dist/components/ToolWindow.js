@@ -149,6 +149,9 @@ var ToolWindow = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/_react["default"].createElement("div", {
         id: this.props.reference.id,
         className: className,
+        onClick: function onClick() {
+          return _this2.props.popWindow(_this2.props.id);
+        },
         style: {
           left: xPos,
           top: yPos,

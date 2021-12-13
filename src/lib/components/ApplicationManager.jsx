@@ -34,8 +34,18 @@ export default class ApplicationManager extends ApplicationDriver {
   /**
    *
    */
-  toggle (anId) {
-    console.log ("toggle ("+anId+")");
+  listWindows () {
+    for (let i=0;i<this.apps.length;i++) {
+      let app=this.apps [i];
+      console.log ("Window: " + app.id + ", modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown);
+    }
+  }
+
+  /**
+   *
+   */
+  toggleApp (anId) {
+    console.log ("toggleApp ("+anId+")");
 
     let appData=this.getApps();
 
@@ -60,6 +70,26 @@ export default class ApplicationManager extends ApplicationDriver {
   /**
    *
    */
+  deleteApp (anId) {
+    console.log ("deleteApp ("+anId+")");
+
+    let appData=this.getApps();
+
+    for (let i=0;i<appData.length;i++) {
+      let app=appData [i];
+
+      if (app.id==anId) {
+        console.log ("Removing application ...");
+        appData.splice(i, 1);
+        this.setApps (appData);
+        return;
+      }
+    }
+  }  
+
+  /**
+   *
+   */
   getApps () {
     return (this.apps);
   }
@@ -69,6 +99,11 @@ export default class ApplicationManager extends ApplicationDriver {
    */
   setApps (aSet) {
     this.apps=aSet;
+    if (this.onUpdate) {
+      this.onUpdate ();
+    } else {
+      console.log ("Error: can't update windowing system");
+    }
   }
 
   /**

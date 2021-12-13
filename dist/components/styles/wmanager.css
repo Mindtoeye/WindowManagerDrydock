@@ -58,7 +58,7 @@
 }
 
 .dialogWindow {
-  background-color: var(--main-window-content);
+  background-color: #525252;
   position: absolute;
   -webkit-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
   -moz-box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.45);
@@ -83,7 +83,7 @@
 }
 
 .desktopWidget {
-  background-color: var(--main-widget-background);
+  background-color: #5252524f;
   position: absolute;
   border-radius: 3px;
   border: 1px solid #565656;
@@ -97,7 +97,7 @@
 }
 
 .desktopPanel {
-  background-color: var(--main-window-content);
+  background-color: #525252;
   position: absolute;
   border-radius: 3px;
   border: 1px solid #656363;
@@ -114,7 +114,7 @@
 }
 
 .windowContent {
-  color: var(--main-window-text);
+  color: #ffffff;
   margin: 2px;
   padding: 0px;
   flex: 2;
@@ -123,7 +123,7 @@
 }
 
 .windowAppContent {
-  color: var(--main-window-text);
+  color: #ffffff;
   flex: 2;
   display: flex;
   margin-bottom: 4px;
@@ -142,7 +142,7 @@
 }
 
 .dialogContent {
-  color: var(--main-window-text);
+  color: #ffffff;
   margin: 2px;
   flex: 2;
   display: flex;
@@ -150,13 +150,13 @@
 }
 
 .desktopWidgetContent {
-  color: var(--main-window-text);
+  color: #ffffff;
   margin: 2px;
   padding: 2px;
 }
 
 .desktopPanelContent {
-  color: var(--main-window-text);
+  color: #ffffff;
   margin: 2px;
   padding: 2px;
 }
@@ -168,7 +168,7 @@
   padding: 1px;
   padding-left: 4px;
   padding-right: 4px;
-  background: var(--main-window-title);
+  background: #292929;
   border-radius: 3px 3px 0px 0px;
   -moz-border-radius: 3px 3px 0px 0px;
   -webkit-border-radius: 3px 3px 0px 0px;
@@ -188,7 +188,7 @@
   padding: 1px;
   padding-left: 4px;
   padding-right: 4px;
-  background: var(--main-window-title);
+  background: #292929;
   border-radius: 3px 3px 0px 0px;
   -moz-border-radius: 3px 3px 0px 0px;
   -webkit-border-radius: 3px 3px 0px 0px;
@@ -210,7 +210,7 @@
   padding: 1px;
   padding-left: 4px;
   padding-right: 4px;
-  background: var(--main-window-title);
+  background: #292929;
   border-radius: 3px 3px 0px 0px;
   -moz-border-radius: 3px 3px 0px 0px;
   -webkit-border-radius: 3px 3px 0px 0px;
@@ -261,7 +261,7 @@
   padding-right: 4px;
 
   border: 1px inset #717171;
-  color: #c5c5c5;
+  color: #525252;
   
   line-height: 12pt;
   font-size: 8pt;
@@ -289,6 +289,7 @@
   bottom: 0px;
   background: url("images/icons/resize.png") no-repeat fixed center;
   cursor: nwse-resize;  
+  line-height: 6pt;
 }
 
 .gripper img {
@@ -323,13 +324,13 @@
 }
 
 .standardCloseButton > svg:hover line {  
-  stroke: var(--main-highlight);
-  fill: var(--main-highlight);
+  stroke: #dada76;
+  fill: #dada76;
 }
 
 .standardMaximizeButton > svg:hover line {
-  stroke: var(--main-highlight);
-  fill: var(--main-highlight);
+  stroke: #dada76;
+  fill: #dada76;
 }
 
 .windowDebug {  
@@ -361,7 +362,7 @@
 }
 
 .toolwindowbutton:hover {
-  color: var(--main-highlight);
+  color: #dada76;
 }
 
 .mainmenu {
@@ -386,8 +387,8 @@
 }
 
 .apptoolbar {
-  color: var(--main-window-text);
-  background: var(--main-window-content);
+  color: #ffffff;
+  background: #525252;
   margin: 0px;
   margin-right: 2px;
   padding: 2px;
