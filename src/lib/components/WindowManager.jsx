@@ -9,7 +9,7 @@ import WindowApplication from './WindowApplication';
 import Scrim from './Scrim';
 import DataTools from './utils/DataTools';
 
-import './styles/darktheme.css';
+//import './styles/darktheme.css';
 import './styles/wmanager.css';
 
 /**
@@ -310,7 +310,11 @@ export class WindowManager extends React.Component {
       </Dialog>);
     }
 
-    let windowClass="desktopContent " + this.props.classes;
+    let windowClass="knossys-dark desktopContent";
+
+    if (this.props.classes) {
+      windowClass="knossys-dark desktopContent " + this.props.classes;
+    }
 
     return (<div tabIndex="0" onKeyDown={this.onKeyDown} className={windowClass}>      
       {this.props.children}

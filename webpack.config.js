@@ -17,8 +17,7 @@ const config = {
   },
   plugins: [new HtmlWebpackPlugin({
     template: path.resolve (__dirname,'views/index.html'),
-    filename: 'index.html',
-    inject: false
+    filename: 'index.html'
   })],
   resolve: {
     extensions: ['.js','.jsx','.css','.scss','.png','.jpg']

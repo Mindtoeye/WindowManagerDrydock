@@ -1,3 +1,8 @@
+/* 
+  This is a really nice way to establish those values that make a theme unique. However
+  I have not found a way to make it work when used in a library
+*/
+
 :root {
   --main-bg-color: #45484d;
   --main-window-content: #c5c5c5;
