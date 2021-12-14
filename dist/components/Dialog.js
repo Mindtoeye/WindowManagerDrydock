@@ -63,6 +63,7 @@ var Dialog = /*#__PURE__*/function (_React$Component) {
       count: 0,
       index: props.reference.zIndex
     };
+    _this.onClose = _this.onClose.bind(_assertThisInitialized(_this));
     return _this;
   }
   /**
@@ -71,6 +72,21 @@ var Dialog = /*#__PURE__*/function (_React$Component) {
 
 
   _createClass(Dialog, [{
+    key: "onClose",
+    value: function onClose(e, anId) {
+      console.log("onClose (" + anId + ")");
+
+      if (this.props.appManager) {
+        this.props.appManager.deleteApp(anId);
+      } else {
+        console.log("Error: no application manager available");
+      }
+    }
+    /**
+     *
+     */
+
+  }, {
     key: "reIndex",
     value: function reIndex(newIndex) {
       console.log("reIndex (" + newIndex + ")");
@@ -186,8 +202,8 @@ var Dialog = /*#__PURE__*/function (_React$Component) {
         }, this.props.children), /*#__PURE__*/_react["default"].createElement("div", {
           className: "dialogControls"
         }, /*#__PURE__*/_react["default"].createElement(_knossysUiCore.KButton, {
-          onClick: function onClick() {
-            return _this2.props.deleteWindow(_this2.props.reference.id);
+          onClick: function onClick(e) {
+            return _this2.onClose(e, _this2.props.reference.id);
           }
         }, "Ok"))));
       }
@@ -216,8 +232,8 @@ var Dialog = /*#__PURE__*/function (_React$Component) {
         className: "dialogControls"
       }, /*#__PURE__*/_react["default"].createElement("button", {
         className: "largeButton",
-        onClick: function onClick() {
-          return _this2.props.deleteWindow(_this2.props.reference.id);
+        onClick: function onClick(e) {
+          return _this2.onClose(e, _this2.props.reference.id);
         }
       }, "Ok")));
     }

@@ -276,12 +276,23 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
       var modalTop = null;
 
       for (var i = 0; i < windowReferences.length; i++) {
-        var _aTemplate = windowReferences[i]; //>-----------------------------------------------------
+        var _aTemplate = windowReferences[i];
+
+        var _aContent = void 0;
+
+        if (_aTemplate.content) {
+          if (typeof _aTemplate.content === 'function') {
+            _aContent = _aTemplate.content();
+          } else {
+            _aContent = _aTemplate.content;
+          }
+        } //>-----------------------------------------------------
+
 
         if (_aTemplate.type == "window") {
           if (_aTemplate.shown == true) {
-            //windows.push (<WindowApplication settings={this.props.settings} ref={reference} windowReference={aTemplate} id={aTemplate.id} key={aTemplate.index} title={aTemplate.title} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)} maximizeWindow={this.maximizeWindow.bind(this)}>{aTemplate.window}</WindowApplication>);
             windows.push( /*#__PURE__*/_react["default"].createElement(_Window["default"], {
+              appManager: this.props.appManager,
               trigger: this.state.trigger,
               settings: this.props.settings // from globalSettings
               ,
@@ -292,7 +303,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
               popWindow: this.popWindow.bind(this),
               deleteWindow: this.deleteWindow.bind(this),
               maximizeWindow: this.maximizeWindow.bind(this)
-            }, _aTemplate.window));
+            }, _aContent));
             zIndex++;
           }
         } //>-----------------------------------------------------      
@@ -308,6 +319,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
 
             if (modalTop == null) {
               windows.push( /*#__PURE__*/_react["default"].createElement(_Dialog["default"], {
+                appManager: this.props.appManager,
                 trigger: this.state.trigger,
                 settings: this.props.settings // from globalSettings
                 ,
@@ -317,7 +329,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
                 key: _aTemplate.index,
                 popWindow: this.popWindow.bind(this),
                 deleteWindow: this.deleteWindow.bind(this)
-              }, _aTemplate.content));
+              }, _aContent));
             }
           }
         } //>-----------------------------------------------------
@@ -326,6 +338,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
         if (_aTemplate.type == "toolwindow") {
           if (_aTemplate.shown == true) {
             windows.push( /*#__PURE__*/_react["default"].createElement(_ToolWindow["default"], {
+              appManager: this.props.appManager,
               trigger: this.state.trigger,
               settings: this.props.settings // from globalSettings
               ,
@@ -335,7 +348,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
               key: _aTemplate.index,
               popWindow: this.popWindow.bind(this),
               deleteWindow: this.deleteWindow.bind(this)
-            }, _aTemplate.content));
+            }, _aContent));
           }
         } //>-----------------------------------------------------
 
@@ -343,6 +356,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
         if (_aTemplate.type == "applicationwindow") {
           if (_aTemplate.shown == true) {
             windows.push( /*#__PURE__*/_react["default"].createElement(_WindowApplication["default"], {
+              appManager: this.props.appManager,
               trigger: this.state.trigger,
               settings: this.props.settings // from globalSettings
               ,
@@ -352,7 +366,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
               key: _aTemplate.index,
               popWindow: this.popWindow.bind(this),
               deleteWindow: this.deleteWindow.bind(this)
-            }, _aTemplate.content));
+            }, _aContent));
           }
         } //>-----------------------------------------------------
 
@@ -360,6 +374,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
         if (_aTemplate.type == "basicapplicationwindow") {
           if (_aTemplate.shown == true) {
             windows.push( /*#__PURE__*/_react["default"].createElement(_WindowBasicApplication["default"], {
+              appManager: this.props.appManager,
               trigger: this.state.trigger,
               settings: this.props.settings // from globalSettings
               ,
@@ -369,7 +384,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
               key: _aTemplate.index,
               popWindow: this.popWindow.bind(this),
               deleteWindow: this.deleteWindow.bind(this)
-            }, _aTemplate.content));
+            }, _aContent));
           }
         } //>-----------------------------------------------------
 
@@ -381,6 +396,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
           visible: true
         }));
         windows.push( /*#__PURE__*/_react["default"].createElement(_Dialog["default"], {
+          appManager: this.props.appManager,
           trigger: this.state.trigger,
           settings: this.props.settings // from globalSettings
           ,
@@ -390,7 +406,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
           key: modalTop.index,
           popWindow: this.popWindow.bind(this),
           deleteWindow: this.deleteWindow.bind(this)
-        }, modalTop.content));
+        }, aContent));
       }
 
       var windowClass = "knossys-dark desktopContent";

@@ -77,9 +77,21 @@ var ApplicationManager = /*#__PURE__*/function (_ApplicationDriver) {
      */
 
   }, {
-    key: "toggle",
-    value: function toggle(anId) {
-      console.log("toggle (" + anId + ")");
+    key: "listWindows",
+    value: function listWindows() {
+      for (var i = 0; i < this.apps.length; i++) {
+        var app = this.apps[i];
+        console.log("Window: " + app.id + ", modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown);
+      }
+    }
+    /**
+     *
+     */
+
+  }, {
+    key: "toggleApp",
+    value: function toggleApp(anId) {
+      console.log("toggleApp (" + anId + ")");
       var appData = this.getApps();
 
       for (var i = 0; i < appData.length; i++) {
@@ -103,6 +115,27 @@ var ApplicationManager = /*#__PURE__*/function (_ApplicationDriver) {
      */
 
   }, {
+    key: "deleteApp",
+    value: function deleteApp(anId) {
+      console.log("deleteApp (" + anId + ")");
+      var appData = this.getApps();
+
+      for (var i = 0; i < appData.length; i++) {
+        var app = appData[i];
+
+        if (app.id == anId) {
+          console.log("Removing application ...");
+          appData.splice(i, 1);
+          this.setApps(appData);
+          return;
+        }
+      }
+    }
+    /**
+     *
+     */
+
+  }, {
     key: "getApps",
     value: function getApps() {
       return this.apps;
@@ -115,6 +148,12 @@ var ApplicationManager = /*#__PURE__*/function (_ApplicationDriver) {
     key: "setApps",
     value: function setApps(aSet) {
       this.apps = aSet;
+
+      if (this.onUpdate) {
+        this.onUpdate();
+      } else {
+        console.log("Error: can't update windowing system");
+      }
     }
     /**
      *

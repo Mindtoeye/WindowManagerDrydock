@@ -61,6 +61,7 @@ var ToolWindow = /*#__PURE__*/function (_React$Component) {
       count: 0,
       index: props.reference.zIndex
     };
+    _this.onClose = _this.onClose.bind(_assertThisInitialized(_this));
     return _this;
   }
   /**
@@ -69,6 +70,21 @@ var ToolWindow = /*#__PURE__*/function (_React$Component) {
 
 
   _createClass(ToolWindow, [{
+    key: "onClose",
+    value: function onClose(e, anId) {
+      console.log("onClose (" + anId + ")");
+
+      if (this.props.appManager) {
+        this.props.appManager.deleteApp(anId);
+      } else {
+        console.log("Error: no application manager available");
+      }
+    }
+    /**
+     *
+     */
+
+  }, {
     key: "reIndex",
     value: function reIndex(newIndex) {
       console.log("reIndex (" + newIndex + ")");
@@ -167,7 +183,10 @@ var ToolWindow = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/_react["default"].createElement("div", {
         className: "titlecontent"
       }, title), /*#__PURE__*/_react["default"].createElement("div", {
-        className: "toolwindowbutton"
+        className: "toolwindowbutton",
+        onClick: function onClick(e) {
+          return _this2.onClose(e, _this2.props.reference.id);
+        }
       }, "X")), /*#__PURE__*/_react["default"].createElement("div", {
         className: "dialogContent"
       }, this.props.children)));

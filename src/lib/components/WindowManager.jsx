@@ -207,12 +207,20 @@ export class WindowManager extends React.Component {
 
     for (var i=0;i<windowReferences.length;i++) {
       let aTemplate=windowReferences [i];
+      let aContent;
+
+      if (aTemplate.content) {
+        if (typeof aTemplate.content === 'function') {
+          aContent=aTemplate.content ();
+        } else {
+          aContent=aTemplate.content;
+        }
+      }
 
       //>-----------------------------------------------------
 
       if (aTemplate.type=="window") {
         if (aTemplate.shown==true) {
-          //windows.push (<WindowApplication settings={this.props.settings} ref={reference} windowReference={aTemplate} id={aTemplate.id} key={aTemplate.index} title={aTemplate.title} xPos={aTemplate.x} yPos={aTemplate.y} width={"320px"} height={"320px"} popWindow={this.popWindow.bind(this)} deleteWindow={this.deleteWindow.bind(this)} maximizeWindow={this.maximizeWindow.bind(this)}>{aTemplate.window}</WindowApplication>);
           windows.push (<Window 
             appManager={this.props.appManager}
             trigger={this.state.trigger}
@@ -224,7 +232,7 @@ export class WindowManager extends React.Component {
             popWindow={this.popWindow.bind(this)} 
             deleteWindow={this.deleteWindow.bind(this)} 
             maximizeWindow={this.maximizeWindow.bind(this)}>
-              {aTemplate.window}
+              {aContent}
           </Window>);
 
           zIndex++;
@@ -252,7 +260,7 @@ export class WindowManager extends React.Component {
               key={aTemplate.index} 
               popWindow={this.popWindow.bind(this)} 
               deleteWindow={this.deleteWindow.bind(this)}>
-                {aTemplate.content}
+                {aContent}
             </Dialog>);
           }
         }
@@ -272,7 +280,7 @@ export class WindowManager extends React.Component {
             key={aTemplate.index} 
             popWindow={this.popWindow.bind(this)} 
             deleteWindow={this.deleteWindow.bind(this)}>
-              {aTemplate.content}
+              {aContent}
           </ToolWindow>);
         }
       }
@@ -291,7 +299,7 @@ export class WindowManager extends React.Component {
             key={aTemplate.index} 
             popWindow={this.popWindow.bind(this)} 
             deleteWindow={this.deleteWindow.bind(this)}>
-              {aTemplate.content}
+              {aContent}
           </WindowApplication>);
         }
       }
@@ -310,7 +318,7 @@ export class WindowManager extends React.Component {
             key={aTemplate.index} 
             popWindow={this.popWindow.bind(this)} 
             deleteWindow={this.deleteWindow.bind(this)}>
-              {aTemplate.content}
+              {aContent}
           </WindowBasicApplication>);
         }
       }      
@@ -330,7 +338,7 @@ export class WindowManager extends React.Component {
         key={modalTop.index} 
         popWindow={this.popWindow.bind(this)} 
         deleteWindow={this.deleteWindow.bind(this)}>
-          {modalTop.content}
+          {aContent}
       </Dialog>);
     }
 

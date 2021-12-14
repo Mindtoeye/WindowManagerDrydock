@@ -84,6 +84,7 @@ var Window = /*#__PURE__*/function (_React$Component) {
     _this.resize = _this.resize.bind(_assertThisInitialized(_this));
     _this.stopResize = _this.stopResize.bind(_assertThisInitialized(_this));
     _this.maximizeWindow = _this.maximizeWindow.bind(_assertThisInitialized(_this));
+    _this.onClose = _this.onClose.bind(_assertThisInitialized(_this));
     return _this;
   }
   /**
@@ -100,6 +101,21 @@ var Window = /*#__PURE__*/function (_React$Component) {
 
       if (currentResizer != null) {
         currentResizer.addEventListener('mousedown', this.resizeStart);
+      }
+    }
+    /**
+     *
+     */
+
+  }, {
+    key: "onClose",
+    value: function onClose(e, anId) {
+      console.log("onClose (" + anId + ")");
+
+      if (this.props.appManager) {
+        this.props.appManager.deleteApp(anId);
+      } else {
+        console.log("Error: no application manager available");
       }
     }
     /**
@@ -284,14 +300,13 @@ var Window = /*#__PURE__*/function (_React$Component) {
         className: "titlecontent"
       }, title), /*#__PURE__*/_react["default"].createElement("div", {
         className: "standardCloseButton",
-        onClick: function onClick() {
-          return _this3.props.deleteWindow(_this3.props.id);
+        onClick: function onClick(e) {
+          return _this3.onClose(e, _this3.props.reference.id);
         }
       }, /*#__PURE__*/_react["default"].createElement("svg", {
         width: "12",
         height: "12",
-        version: "1.1",
-        xmlns: "http://www.w3.org/2000/svg"
+        version: "1.1"
       }, /*#__PURE__*/_react["default"].createElement("line", {
         x1: "1",
         y1: "11",
