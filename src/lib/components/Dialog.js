@@ -132,6 +132,8 @@ class Dialog extends React.Component {
   onClose (e,anId) {
     console.log ("onClose ("+anId+")");
 
+    this.stopResize();
+
     if (this.props.appManager) {
       this.props.appManager.deleteApp (anId);
     } else {

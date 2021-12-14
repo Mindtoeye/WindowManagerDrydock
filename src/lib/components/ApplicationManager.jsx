@@ -123,10 +123,10 @@ export default class ApplicationManager extends ApplicationDriver {
     console.log (anApplication);
 
     if (anApplication.hasOwnProperty ("type")==false) {
-      anApplication.type="window";
+      anApplication.type=WindowConstants.WINDOW_DEFAULT;
     }
 
-    if (anApplication.type=="dialog") {
+    if (anApplication.type==WindowConstants.WINDOW_DIALOG) {
       if (anApplication.hasOwnProperty ("resizable")==false) {
         anApplication.resizable=false;
       }
@@ -159,11 +159,11 @@ export default class ApplicationManager extends ApplicationDriver {
     }    
 
     if (anApplication.hasOwnProperty ("width")==false) {
-      anApplication.x=320;
+      anApplication.width=320;
     }
 
     if (anApplication.hasOwnProperty ("height")==false) {
-      anApplication.y=200;
+      anApplication.height=200;
     }        
 
     this.index++;

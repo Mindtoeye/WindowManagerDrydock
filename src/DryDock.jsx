@@ -81,8 +81,6 @@ class DryDock extends Component {
       this.appManager.addApplication ({
         title: "Tool Window",
         type: WindowConstants.WINDOW_TOOLWINDOW,
-        modal: false,
-        centered: true,
         width: 50,
         height: 300
       });
@@ -145,11 +143,24 @@ class DryDock extends Component {
   render() {
     let apps=this.appManager.getApps ();
 
+    let windowList=[];
+
+    for (let i=0;i<apps.length;i++) {
+      let app=apps[i];
+      windowList.push (<li key={"winid-"+i} >{"Window: " + app.id + ", modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown}</li>);
+    }
+
     return (
      <WindowManager 
         onKeyDown={this.onKeyDown}
         settings={this.state.globalSettings}
         appManager={this.appManager}>
+
+        <div className="windowlistpanel">
+          <ol>
+          {windowList}
+          </ol>
+        </div>
 
         <div className="drydockpanel">
           <p>Use the following keys to show and test the various window manager features</p>

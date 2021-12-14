@@ -171,8 +171,8 @@ export class Window extends React.Component {
    *
    */  
   render() {
-    let xPos=this.props.reference.xPos;
-    let yPos=this.props.reference.yPos;
+    let xPos=this.props.reference.x;
+    let yPos=this.props.reference.y;
     let aWidth=this.props.reference.width;
     let aHeight=this.props.reference.height;
     let anIndex=this.state.index;
