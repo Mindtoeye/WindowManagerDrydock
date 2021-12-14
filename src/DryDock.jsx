@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { KnossysInfoPanel, KButton } from '@knossys/knossys-ui-core';
+import { KnossysInfoPanel, KButton, KList } from '@knossys/knossys-ui-core';
 
 import WindowManager from './lib/components/WindowManager';
 import ApplicationManager from './lib/components/ApplicationManager';
@@ -147,7 +147,7 @@ class DryDock extends Component {
 
     for (let i=0;i<apps.length;i++) {
       let app=apps[i];
-      windowList.push (<li key={"winid-"+i} >{"Window: " + app.id + ", modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown}</li>);
+      windowList.push ("Window: " + app.id + ", modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown);
     }
 
     return (
@@ -157,21 +157,19 @@ class DryDock extends Component {
         appManager={this.appManager}>
 
         <div className="windowlistpanel">
-          <ol>
-          {windowList}
-          </ol>
+          <KList list={windowList} itemclass="windowlistitem" />
         </div>
 
         <div className="drydockpanel">
           <p>Use the following keys to show and test the various window manager features</p>
-          <p>  d: show modal dialog</p>
-          <p>  s: show modeless dialog</p>          
-          <p>  t: show tool window</p>          
-          <p>  w: add generic window</p>
-          <p>  a: add application</p>
-          <p>  b: add basic application</p>
-          <p>  c: show confirm modal dialog</p>
-          <p>  l: list windows</p>
+          <p>  <span style={{color: "yellow"}}>d</span>: show modal dialog</p>
+          <p>  <span style={{color: "yellow"}}>s</span>: show modeless dialog</p>          
+          <p>  <span style={{color: "yellow"}}>t</span>: show tool window</p>          
+          <p>  <span style={{color: "yellow"}}>w</span>: add generic window</p>
+          <p>  <span style={{color: "yellow"}}>a</span>: add application</p>
+          <p>  <span style={{color: "yellow"}}>b</span>: add basic application</p>
+          <p>  <span style={{color: "yellow"}}>c</span>: show confirm modal dialog</p>
+          <p>  <span style={{color: "yellow"}}>l</span>: list windows</p>
         </div>
       </WindowManager>
     );
