@@ -105,7 +105,6 @@ export class Window extends React.Component {
     let original_mouse_y = e.pageY;
     
     this.setState ({
-      index: 0,
       original_width: original_width,
       original_height: original_height,
       original_mouse_x: original_mouse_x,

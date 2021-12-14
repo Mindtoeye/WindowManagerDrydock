@@ -8,6 +8,7 @@ import WindowBasicApplication from './WindowBasicApplication';
 import WindowApplication from './WindowApplication';
 import Scrim from './Scrim';
 import DataTools from './utils/DataTools';
+import WindowConstants from './WindowConstants';
 
 //import './styles/darktheme.css';
 import './styles/wmanager.css';
@@ -196,7 +197,7 @@ export class WindowManager extends React.Component {
         return (aTemplate.content);
       }
 
-      if (aTemplate.type=="dialog") {
+      if (aTemplate.type==WindowConstants.WINDOW_DIALOG) {
         if (aTemplate.mode=="modal") {
           scrim=<Scrim visible={true}></Scrim>;
         }
@@ -204,6 +205,7 @@ export class WindowManager extends React.Component {
     }
 
     var modalTop=null;
+    var aModalContent;
 
     for (var i=0;i<windowReferences.length;i++) {
       let aTemplate=windowReferences [i];
@@ -219,7 +221,7 @@ export class WindowManager extends React.Component {
 
       //>-----------------------------------------------------
 
-      if (aTemplate.type=="window") {
+      if (aTemplate.type==WindowConstants.WINDOW_DEFAULT) {
         if (aTemplate.shown==true) {
           windows.push (<Window 
             appManager={this.props.appManager}
@@ -241,11 +243,12 @@ export class WindowManager extends React.Component {
 
       //>-----------------------------------------------------      
 
-      if (aTemplate.type=="dialog") {      
+      if (aTemplate.type==WindowConstants.WINDOW_DIALOG) {      
         if (aTemplate.shown==true) { 
           if (aTemplate.hasOwnProperty ("modal")==true) {
             if (aTemplate.modal==true) {
               modalTop=aTemplate;
+              aModalContent=aContent;
             }
           }
 
@@ -257,7 +260,8 @@ export class WindowManager extends React.Component {
               ref={"win"+aTemplate.index} 
               reference={aTemplate} 
               id={aTemplate.id} 
-              key={aTemplate.index} 
+              key={aTemplate.index}
+              resizable={aTemplate.resizable}
               popWindow={this.popWindow.bind(this)} 
               deleteWindow={this.deleteWindow.bind(this)}>
                 {aContent}
@@ -268,7 +272,7 @@ export class WindowManager extends React.Component {
 
       //>-----------------------------------------------------
 
-      if (aTemplate.type=="toolwindow") { 
+      if (aTemplate.type==WindowConstants.WINDOW_TOOLWINDOW) { 
         if (aTemplate.shown==true) {           
           windows.push (<ToolWindow 
             appManager={this.props.appManager}
@@ -287,7 +291,7 @@ export class WindowManager extends React.Component {
 
       //>-----------------------------------------------------
 
-      if (aTemplate.type=="applicationwindow") { 
+      if (aTemplate.type==WindowConstants.WINDOW_APPLICATION) { 
         if (aTemplate.shown==true) {           
           windows.push (<WindowApplication 
             appManager={this.props.appManager}            
@@ -306,7 +310,7 @@ export class WindowManager extends React.Component {
 
       //>-----------------------------------------------------
 
-      if (aTemplate.type=="basicapplicationwindow") { 
+      if (aTemplate.type==WindowConstants.WINDOW_BASICAPPLICATION) { 
         if (aTemplate.shown==true) {           
           windows.push (<WindowBasicApplication 
             appManager={this.props.appManager}            
@@ -335,10 +339,11 @@ export class WindowManager extends React.Component {
         ref={"win"+modalTop.index} 
         reference={modalTop} 
         id={modalTop.id} 
+        resizable={modalTop.resizable}
         key={modalTop.index} 
         popWindow={this.popWindow.bind(this)} 
         deleteWindow={this.deleteWindow.bind(this)}>
-          {aContent}
+          {aModalContent}
       </Dialog>);
     }
 

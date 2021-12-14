@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import ApplicationDriver from './ApplicationDriver';
 import DataTools from './utils/DataTools';
+import WindowConstants from './WindowConstants';
 
 import { uuidv4 } from './utils/uuid';
 
@@ -120,6 +121,16 @@ export default class ApplicationManager extends ApplicationDriver {
     console.log ("addApplication ()");
 
     console.log (anApplication);
+
+    if (anApplication.hasOwnProperty ("type")==false) {
+      anApplication.type="window";
+    }
+
+    if (anApplication.type=="dialog") {
+      if (anApplication.hasOwnProperty ("resizable")==false) {
+        anApplication.resizable=false;
+      }
+    }
 
     anApplication.shown=true;
     anApplication.maximized=false;

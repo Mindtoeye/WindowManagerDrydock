@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
+import { KnossysInfoPanel, KButton } from '@knossys/knossys-ui-core';
+
 import WindowManager from './lib/components/WindowManager';
 import ApplicationManager from './lib/components/ApplicationManager';
 import { uuidv4 } from './lib/components/utils/uuid';
-
-import { KnossysInfoPanel, KButton } from '@knossys/knossys-ui-core';
+import WindowConstants from './lib/components/WindowConstants';
 
 import '../css/main.css';
 import '../css/drydock.css';
@@ -50,7 +51,7 @@ class DryDock extends Component {
 
       this.appManager.addApplication ({
         title: "Modal Dialog",
-        type: "dialog",
+        type: WindowConstants.WINDOW_DIALOG,
         modal: true,
         centered: true,
         width: 320,
@@ -64,9 +65,10 @@ class DryDock extends Component {
 
       this.appManager.addApplication ({
         title: "Modeless Dialog",
-        type: "dialog",
+        type: WindowConstants.WINDOW_DIALOG,
         modal: false,
         centered: true,
+        resizable: true,
         width: 320,
         height: 200
       });
@@ -78,7 +80,7 @@ class DryDock extends Component {
 
       this.appManager.addApplication ({
         title: "Tool Window",
-        type: "toolwindow",
+        type: WindowConstants.WINDOW_TOOLWINDOW,
         modal: false,
         centered: true,
         width: 50,
@@ -92,7 +94,7 @@ class DryDock extends Component {
 
       this.appManager.addApplication ({
         title: "Generic Window",
-        type: "window",
+        type: WindowConstants.WINDOW_DEFAULT,
         width: 320,
         height: 200
       });
@@ -104,7 +106,7 @@ class DryDock extends Component {
 
       this.appManager.addApplication ({
         title: "Application",
-        type: "applicationwindow",
+        type: WindowConstants.WINDOW_APPLICATION,
         width: 400,
         height: 300
       });      
@@ -116,7 +118,7 @@ class DryDock extends Component {
 
       this.appManager.addApplication ({
         title: "Basic Application",
-        type: "basicapplicationwindow",
+        type: WindowConstants.WINDOW_BASICAPPLICATION,
         width: 400,
         height: 300
       });      
