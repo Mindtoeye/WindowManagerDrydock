@@ -23,6 +23,7 @@ export class Window extends React.Component {
 
     this.state = {
       id: props.reference.id,
+      blocked: false,
       count: 0,
       index: props.reference.zIndex,
       status: "",
@@ -42,7 +43,8 @@ export class Window extends React.Component {
 
     this.maximizeWindow=this.maximizeWindow.bind(this);    
 
-    this.onClose=this.onClose.bind(this);    
+    this.onClose=this.onClose.bind(this);
+    this.onEventSink=this.onEventSink.bind(this);
   }
 
   /**
@@ -58,7 +60,35 @@ export class Window extends React.Component {
     if (currentResizer!=null) {
       currentResizer.addEventListener('mousedown', this.resizeStart);
     }
+
+    this.setStatus ("Ready");
   }
+
+  /**
+   *
+   */
+  onEventSink (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  /**
+   *
+   */
+  block () {
+    this.setState ({
+      blocked: true
+    })
+  }
+
+  /**
+   *
+   */
+  unblock () {
+    this.setState ({
+      blocked: true
+    })
+  }  
 
   /**
    *
@@ -170,6 +200,15 @@ export class Window extends React.Component {
   /**
    *
    */  
+  setStatus (aMessage) {
+    this.setState ({
+      status: aMessage
+    });
+  }
+
+  /**
+   *
+   */  
   render() {
     let xPos=this.props.reference.x;
     let yPos=this.props.reference.y;
@@ -204,6 +243,12 @@ export class Window extends React.Component {
     if (windowContent==null) {
       //windowContent=<WindowDummyContent windowReference={this.props.windowReference}/>;
       windowContent=<WindowGridContent reference={this.props.reference}/>;
+    }
+
+    let display="block";
+
+    if (this.state.blocked==false) {
+      display="none";
     }
 
     return (
@@ -245,7 +290,8 @@ export class Window extends React.Component {
         </div>
         <div className="gripper">
           <img id={this.state.currentResizerId} className="resizegripper" src={gripper} />
-        </div>        
+        </div>  
+        <div className="klocal-scrim" onClick={(e) => onEventSink(e)} style={{display: display}}></div>      
       </div>
     </Draggable>);
   }
