@@ -21,8 +21,8 @@ case "${unameOut}" in
 esac
 echo Building for: ${machine}
 
-if [ ${machine} == "Linux" ]; then
- export NODE_OPTIONS=--openssl-legacy-provider
-fi
+#if [ ${machine} == "Linux" ]; then
+# export NODE_OPTIONS=--openssl-legacy-provider
+#fi
 
 npm run build
