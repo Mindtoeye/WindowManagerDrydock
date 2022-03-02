@@ -39,6 +39,7 @@ export default class ApplicationManager extends ApplicationDriver {
     for (let i=0;i<this.apps.length;i++) {
       let app=this.apps [i];
       console.log ("Window: " + app.id + ", modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown);
+      console.log (app);
     }
   }
 

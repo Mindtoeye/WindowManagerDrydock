@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 
 import { KnossysInfoPanel, KButton, KList } from '@knossys/knossys-ui-core';
 
-import WindowManager from './lib/components/WindowManager';
-import ApplicationManager from './lib/components/ApplicationManager';
 import { uuidv4 } from './lib/components/utils/uuid';
 import WindowConstants from './lib/components/WindowConstants';
+import WindowManager from './lib/components/WindowManager';
+import WindowTaskManager from './lib/components/WindowTaskManager';
+import ApplicationManager from './lib/components/ApplicationManager';
 
 import '../css/main.css';
 import '../css/drydock.css';
@@ -30,6 +31,21 @@ class DryDock extends Component {
 
     this.appManager=new ApplicationManager ();
     this.appManager.setOnUpdate (this.updateWindowStack);
+  }
+
+  /**
+   * 
+   */
+  componentDidMount () {
+    this.appManager.addApplication ({
+      title: "Knossys Task Manager",
+      type: WindowConstants.WINDOW_DEFAULT,
+      width: 250,
+      height: 300,
+      content: <WindowTaskManager appManager={this.appManager} />
+    });
+
+    this.updateWindowStack ();
   }
 
   /**
@@ -141,6 +157,7 @@ class DryDock extends Component {
    *
    */
   render() {
+    /*
     let apps=this.appManager.getApps ();
 
     let windowList=[];
@@ -149,16 +166,13 @@ class DryDock extends Component {
       let app=apps[i];
       windowList.push ("Window: " + app.id + ", modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown);
     }
+    */
 
     return (
      <WindowManager 
         onKeyDown={this.onKeyDown}
         settings={this.state.globalSettings}
         appManager={this.appManager}>
-
-        <div className="windowlistpanel">
-          <KList list={windowList} itemclass="windowlistitem" />
-        </div>
 
         <div className="drydockpanel">
           <p>Use the following keys to show and test the various window manager features</p>
