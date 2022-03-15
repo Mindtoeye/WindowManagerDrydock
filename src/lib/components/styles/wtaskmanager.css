@@ -2,12 +2,16 @@
 .wtaskmanager {
   color: lightgrey;
   width: 100%;
+  overflow: auto;
+  padding: 3px;
+  background: #202020;
 }
 
 .wtaskmanageritem {
   border: 1px solid #505050;
   border-radius: 3px;
   margin: 4px;
+  margin-bottom: 8px;
   padding: 4px;
   display: flex;
   flex-direction: column;
