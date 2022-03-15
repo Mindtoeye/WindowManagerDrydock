@@ -1,6 +1,6 @@
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -15,6 +15,10 @@ var _reactDraggable = _interopRequireWildcard(require("react-draggable"));
 
 var _knossysUiCore = require("@knossys/knossys-ui-core");
 
+var _uuid = require("./utils/uuid");
+
+var _resize = _interopRequireDefault(require("./styles/images/icons/resize.png"));
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -25,9 +29,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } Object.defineProperty(subClass, "prototype", { value: Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }), writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
@@ -60,9 +64,21 @@ var Dialog = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       id: props.id,
+      currentResizerId: (0, _uuid.uuidv4)(),
       count: 0,
-      index: props.reference.zIndex
+      resized: false,
+      minimum_size: 200,
+      index: props.reference.zIndex,
+      width: props.reference.width,
+      height: props.reference.height,
+      original_mouse_x: 0,
+      original_mouse_y: 0,
+      original_x: 0,
+      original_y: 0
     };
+    _this.resizeStart = _this.resizeStart.bind(_assertThisInitialized(_this));
+    _this.resize = _this.resize.bind(_assertThisInitialized(_this));
+    _this.stopResize = _this.stopResize.bind(_assertThisInitialized(_this));
     _this.onClose = _this.onClose.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -72,9 +88,97 @@ var Dialog = /*#__PURE__*/function (_React$Component) {
 
 
   _createClass(Dialog, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      console.log("componentDidMount(" + this.props.resizable + ")");
+
+      if (this.props.resizable) {
+        if (this.props.resizable == true) {
+          var currentResizer = document.getElementById(this.state.currentResizerId); // this is legit since some windows that are not dialogs should not be
+          // resizable
+
+          if (currentResizer != null) {
+            currentResizer.addEventListener('mousedown', this.resizeStart);
+          }
+        }
+      }
+    }
+    /**
+     *
+     */
+
+  }, {
+    key: "resizeStart",
+    value: function resizeStart(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var element = document.getElementById(this.props.reference.id);
+      var original_x = element.getBoundingClientRect().left;
+      var original_y = element.getBoundingClientRect().top;
+      var original_mouse_x = e.pageX;
+      var original_mouse_y = e.pageY;
+      this.setState({
+        index: 0,
+        resized: true,
+        original_mouse_x: original_mouse_x,
+        original_mouse_y: original_mouse_y,
+        original_x: original_x,
+        original_y: original_y
+      }, function (e) {
+        window.addEventListener('mousemove', _this2.resize);
+        window.addEventListener('mouseup', _this2.stopResize);
+      });
+    }
+    /**
+     *
+     */
+
+  }, {
+    key: "resize",
+    value: function resize(e) {
+      var element = document.getElementById(this.props.reference.id);
+
+      if (!element) {
+        console.log("bump");
+      }
+
+      var xDiv = e.pageX - this.state.original_mouse_x;
+      var yDiv = e.pageY - this.state.original_mouse_y;
+      var width = this.state.width + xDiv;
+      var height = this.state.height + yDiv;
+
+      if (width > this.state.minimum_size) {
+        element.style.width = width + "px";
+      }
+
+      if (height > this.state.minimum_size) {
+        element.style.height = height + "px";
+      }
+    }
+    /**
+     *
+     */
+
+  }, {
+    key: "stopResize",
+    value: function stopResize() {
+      window.removeEventListener('mousemove', this.resize);
+      var element = document.getElementById(this.props.reference.id);
+      this.setState({
+        width: parseInt(element.style.width, 10),
+        height: parseInt(element.style.height, 10)
+      });
+    }
+    /**
+     *
+     */
+
+  }, {
     key: "onClose",
     value: function onClose(e, anId) {
       console.log("onClose (" + anId + ")");
+      this.stopResize();
 
       if (this.props.appManager) {
         this.props.appManager.deleteApp(anId);
@@ -119,15 +223,14 @@ var Dialog = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var xPos = this.props.reference.x;
       var yPos = this.props.reference.y;
-      var aWidth = this.props.reference.width;
-      var aHeight = this.props.reference.height;
       var anIndex = this.state.index;
       var className = "dialogWindow";
       var modal = true;
+      var resizer;
 
       if (this.props.reference.hasOwnProperty("modal") == true) {
         if (this.props.reference.modal == false) {
@@ -153,21 +256,25 @@ var Dialog = /*#__PURE__*/function (_React$Component) {
         }
       }
 
-      if (typeof this.props.reference.width == 'number') {
-        aWidth = this.props.reference.width + "px";
-      } else {
-        if (this.props.reference.width.indexOf("px") == -1) {
-          aWidth = this.props.reference.width + "px";
+      if (this.props.resizable) {
+        if (this.props.resizable == true) {
+          resizer = /*#__PURE__*/_react["default"].createElement("div", {
+            className: "gripper"
+          }, /*#__PURE__*/_react["default"].createElement("img", {
+            id: this.state.currentResizerId,
+            className: "resizegripper",
+            src: _resize["default"]
+          }));
         }
       }
 
-      if (typeof this.props.reference.height == 'number') {
-        aHeight = this.props.reference.height + "px";
-      } else {
-        if (this.props.reference.height.indexOf("px") == -1) {
-          aHeight = this.props.reference.height + "px";
-        }
-      }
+      var initialStyle = {
+        left: xPos,
+        top: yPos,
+        width: this.state.width + "px",
+        height: this.state.height + "px",
+        zIndex: anIndex
+      };
 
       if (modal == false) {
         return /*#__PURE__*/_react["default"].createElement(_reactDraggable["default"], {
@@ -181,19 +288,13 @@ var Dialog = /*#__PURE__*/function (_React$Component) {
           id: this.props.reference.id,
           className: className,
           onClick: function onClick() {
-            return _this2.props.popWindow(_this2.props.id);
+            return _this3.props.popWindow(_this3.props.id);
           },
-          style: {
-            left: xPos,
-            top: yPos,
-            width: aWidth,
-            height: aHeight,
-            zIndex: anIndex
-          }
+          style: initialStyle
         }, /*#__PURE__*/_react["default"].createElement("div", {
           className: "macribbon handle",
           onClick: function onClick() {
-            return _this2.props.popWindow(_this2.props.reference.id);
+            return _this3.props.popWindow(_this3.props.reference.id);
           }
         }, /*#__PURE__*/_react["default"].createElement("div", {
           className: "titlecontent"
@@ -203,37 +304,30 @@ var Dialog = /*#__PURE__*/function (_React$Component) {
           className: "dialogControls"
         }, /*#__PURE__*/_react["default"].createElement(_knossysUiCore.KButton, {
           onClick: function onClick(e) {
-            return _this2.onClose(e, _this2.props.reference.id);
+            return _this3.onClose(e, _this3.props.reference.id);
           }
-        }, "Ok"))));
+        }, "Ok")), resizer));
       }
 
       return /*#__PURE__*/_react["default"].createElement("div", {
         id: this.props.reference.id,
         className: className,
         onClick: function onClick() {
-          return _this2.props.popWindow(_this2.props.id);
+          return _this3.props.popWindow(_this3.props.id);
         },
-        style: {
-          left: xPos,
-          top: yPos,
-          width: aWidth,
-          height: aHeight,
-          zIndex: anIndex
-        }
+        style: initialStyle
       }, /*#__PURE__*/_react["default"].createElement("div", {
         className: "macribbon",
         onClick: function onClick() {
-          return _this2.props.popWindow(_this2.props.reference.id);
+          return _this3.props.popWindow(_this3.props.reference.id);
         }
       }, title), /*#__PURE__*/_react["default"].createElement("div", {
         className: "dialogContent"
       }, this.props.children), /*#__PURE__*/_react["default"].createElement("div", {
         className: "dialogControls"
-      }, /*#__PURE__*/_react["default"].createElement("button", {
-        className: "largeButton",
+      }, /*#__PURE__*/_react["default"].createElement(_knossysUiCore.KButton, {
         onClick: function onClick(e) {
-          return _this2.onClose(e, _this2.props.reference.id);
+          return _this3.onClose(e, _this3.props.reference.id);
         }
       }, "Ok")));
     }

@@ -5,13 +5,17 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = exports.DesktopWidget = void 0;
+exports["default"] = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
-var _reactDom = _interopRequireDefault(require("react-dom"));
+var _knossysUiCore = require("@knossys/knossys-ui-core");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+require("./styles/wtaskmanager.css");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -34,95 +38,58 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 /**
- *
+ * 
  */
-var DesktopWidget = /*#__PURE__*/function (_React$Component) {
-  _inherits(DesktopWidget, _React$Component);
+var WindowTaskManager = /*#__PURE__*/function (_Component) {
+  _inherits(WindowTaskManager, _Component);
 
-  var _super = _createSuper(DesktopWidget);
+  var _super = _createSuper(WindowTaskManager);
 
-  /**
-  *
-  */
-  function DesktopWidget(props) {
-    var _this;
-
-    _classCallCheck(this, DesktopWidget);
-
-    _this = _super.call(this, props);
-    _this.state = {
-      id: props.id,
-      count: 0,
-      index: props.zIndex
-    };
-    return _this;
-  }
   /**
    *
    */
+  function WindowTaskManager(props) {
+    var _this;
+
+    _classCallCheck(this, WindowTaskManager);
+
+    _this = _super.call(this, props);
+    _this.state = {};
+    return _this;
+  }
+  /**
+   * 
+   */
 
 
-  _createClass(DesktopWidget, [{
-    key: "getWindowId",
-    value: function getWindowId() {
-      return this.state.id;
-    }
-    /**
-     *
-     */
-
-  }, {
+  _createClass(WindowTaskManager, [{
     key: "render",
     value: function render() {
-      var titleElement;
-      var labelElement;
+      console.log("WindowTaskManager:render()");
+      var windowList = [];
+      var appManager = this.props.appManager;
+      var winlist = appManager.getApps();
 
-      if (this.props.title) {
-        titleElement = /*#__PURE__*/_react["default"].createElement("div", {
-          className: "widgetribbon"
-        }, this.props.title);
+      for (var i = 0; i < winlist.length; i++) {
+        var app = winlist[i];
+        windowList.push( /*#__PURE__*/_react["default"].createElement("div", {
+          key: "winitem-" + i,
+          className: "wtaskmanageritem"
+        }, /*#__PURE__*/_react["default"].createElement("div", {
+          className: "wtaskmanagertitle"
+        }, app.title), /*#__PURE__*/_react["default"].createElement("div", {
+          className: "wtaskmanagercontent"
+        }, "modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown)));
       }
 
-      if (this.props.label) {
-        labelElement = /*#__PURE__*/_react["default"].createElement("div", {
-          className: "dialogControls"
-        }, this.props.label);
-      }
-
-      var xPos = this.props.xPos;
-      var yPos = this.props.yPos;
-      var aWidth;
-
-      if (this.props.width) {
-        aWidth = this.props.width;
-      }
-
-      var aHeight;
-
-      if (this.props.height) {
-        aHeight = this.props.height;
-      }
-
-      var anIndex = this.state.index;
       return /*#__PURE__*/_react["default"].createElement("div", {
-        id: this.props.id,
-        className: "desktopWidget",
-        style: {
-          left: xPos,
-          top: yPos,
-          width: aWidth,
-          height: aHeight,
-          zIndex: anIndex
-        }
-      }, titleElement, /*#__PURE__*/_react["default"].createElement("div", {
-        className: "desktopWidgetContent"
-      }, this.props.children), labelElement);
+        className: "wtaskmanager"
+      }, windowList);
     }
   }]);
 
-  return DesktopWidget;
-}(_react["default"].Component);
+  return WindowTaskManager;
+}(_react.Component);
 
-exports.DesktopWidget = DesktopWidget;
-var _default = DesktopWidget;
+var _default = WindowTaskManager;
 exports["default"] = _default;

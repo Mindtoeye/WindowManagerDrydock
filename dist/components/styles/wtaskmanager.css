@@ -1,0 +1,29 @@
+
+.wtaskmanager {
+  color: lightgrey;
+  width: 100%;
+}
+
+.wtaskmanageritem {
+  border: 1px solid #505050;
+  border-radius: 3px;
+  margin: 4px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  background: #363636;
+}
+
+.wtaskmanagertitle {
+  flex: 0;
+  background: #444444;
+  padding: 3px;
+  line-height: 10pt;
+  border: 1px solid #545454;
+  border-radius: 3px;
+}
+
+.wtaskmanagercontent {
+  flex: 1;
+  font-size: 7pt;
+}

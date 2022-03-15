@@ -1,6 +1,6 @@
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -25,6 +25,8 @@ var _Scrim = _interopRequireDefault(require("./Scrim"));
 
 var _DataTools = _interopRequireDefault(require("./utils/DataTools"));
 
+var _WindowConstants = _interopRequireDefault(require("./WindowConstants"));
+
 require("./styles/wmanager.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -33,9 +35,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } Object.defineProperty(subClass, "prototype", { value: Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }), writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
@@ -264,7 +266,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
           return aTemplate.content;
         }
 
-        if (aTemplate.type == "dialog") {
+        if (aTemplate.type == _WindowConstants["default"].WINDOW_DIALOG) {
           if (aTemplate.mode == "modal") {
             scrim = /*#__PURE__*/_react["default"].createElement(_Scrim["default"], {
               visible: true
@@ -274,22 +276,22 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
       }
 
       var modalTop = null;
+      var aModalContent;
 
       for (var i = 0; i < windowReferences.length; i++) {
         var _aTemplate = windowReferences[i];
-
-        var _aContent = void 0;
+        var aContent = void 0;
 
         if (_aTemplate.content) {
           if (typeof _aTemplate.content === 'function') {
-            _aContent = _aTemplate.content();
+            aContent = _aTemplate.content();
           } else {
-            _aContent = _aTemplate.content;
+            aContent = _aTemplate.content;
           }
         } //>-----------------------------------------------------
 
 
-        if (_aTemplate.type == "window") {
+        if (_aTemplate.type == _WindowConstants["default"].WINDOW_DEFAULT) {
           if (_aTemplate.shown == true) {
             windows.push( /*#__PURE__*/_react["default"].createElement(_Window["default"], {
               appManager: this.props.appManager,
@@ -303,17 +305,18 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
               popWindow: this.popWindow.bind(this),
               deleteWindow: this.deleteWindow.bind(this),
               maximizeWindow: this.maximizeWindow.bind(this)
-            }, _aContent));
+            }, aContent));
             zIndex++;
           }
         } //>-----------------------------------------------------      
 
 
-        if (_aTemplate.type == "dialog") {
+        if (_aTemplate.type == _WindowConstants["default"].WINDOW_DIALOG) {
           if (_aTemplate.shown == true) {
             if (_aTemplate.hasOwnProperty("modal") == true) {
               if (_aTemplate.modal == true) {
                 modalTop = _aTemplate;
+                aModalContent = aContent;
               }
             }
 
@@ -327,15 +330,16 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
                 reference: _aTemplate,
                 id: _aTemplate.id,
                 key: _aTemplate.index,
+                resizable: _aTemplate.resizable,
                 popWindow: this.popWindow.bind(this),
                 deleteWindow: this.deleteWindow.bind(this)
-              }, _aContent));
+              }, aContent));
             }
           }
         } //>-----------------------------------------------------
 
 
-        if (_aTemplate.type == "toolwindow") {
+        if (_aTemplate.type == _WindowConstants["default"].WINDOW_TOOLWINDOW) {
           if (_aTemplate.shown == true) {
             windows.push( /*#__PURE__*/_react["default"].createElement(_ToolWindow["default"], {
               appManager: this.props.appManager,
@@ -348,12 +352,12 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
               key: _aTemplate.index,
               popWindow: this.popWindow.bind(this),
               deleteWindow: this.deleteWindow.bind(this)
-            }, _aContent));
+            }, aContent));
           }
         } //>-----------------------------------------------------
 
 
-        if (_aTemplate.type == "applicationwindow") {
+        if (_aTemplate.type == _WindowConstants["default"].WINDOW_APPLICATION) {
           if (_aTemplate.shown == true) {
             windows.push( /*#__PURE__*/_react["default"].createElement(_WindowApplication["default"], {
               appManager: this.props.appManager,
@@ -366,12 +370,12 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
               key: _aTemplate.index,
               popWindow: this.popWindow.bind(this),
               deleteWindow: this.deleteWindow.bind(this)
-            }, _aContent));
+            }, aContent));
           }
         } //>-----------------------------------------------------
 
 
-        if (_aTemplate.type == "basicapplicationwindow") {
+        if (_aTemplate.type == _WindowConstants["default"].WINDOW_BASICAPPLICATION) {
           if (_aTemplate.shown == true) {
             windows.push( /*#__PURE__*/_react["default"].createElement(_WindowBasicApplication["default"], {
               appManager: this.props.appManager,
@@ -384,7 +388,7 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
               key: _aTemplate.index,
               popWindow: this.popWindow.bind(this),
               deleteWindow: this.deleteWindow.bind(this)
-            }, _aContent));
+            }, aContent));
           }
         } //>-----------------------------------------------------
 
@@ -403,10 +407,11 @@ var WindowManager = /*#__PURE__*/function (_React$Component) {
           ref: "win" + modalTop.index,
           reference: modalTop,
           id: modalTop.id,
+          resizable: modalTop.resizable,
           key: modalTop.index,
           popWindow: this.popWindow.bind(this),
           deleteWindow: this.deleteWindow.bind(this)
-        }, aContent));
+        }, aModalContent));
       }
 
       var windowClass = "knossys-dark desktopContent";

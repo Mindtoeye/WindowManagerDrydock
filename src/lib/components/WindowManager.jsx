@@ -9,6 +9,7 @@ import WindowApplication from './WindowApplication';
 import Scrim from './Scrim';
 import DataTools from './utils/DataTools';
 import WindowConstants from './WindowConstants';
+import WindowDummyComponent from './WindowDummyComponent';
 
 //import './styles/darktheme.css';
 import './styles/wmanager.css';
@@ -208,6 +209,7 @@ export class WindowManager extends React.Component {
     var aModalContent;
 
     for (var i=0;i<windowReferences.length;i++) {
+
       let aTemplate=windowReferences [i];
       let aContent;
 
@@ -217,6 +219,10 @@ export class WindowManager extends React.Component {
         } else {
           aContent=aTemplate.content;
         }
+      }
+
+      if (aContent==undefined) {
+        aContent=<WindowDummyComponent />;
       }
 
       //>-----------------------------------------------------
@@ -234,7 +240,7 @@ export class WindowManager extends React.Component {
             popWindow={this.popWindow.bind(this)} 
             deleteWindow={this.deleteWindow.bind(this)} 
             maximizeWindow={this.maximizeWindow.bind(this)}>
-              {aContent}
+              {React.cloneElement(aContent, { propagationData: this.state.trigger })}
           </Window>);
 
           zIndex++;
