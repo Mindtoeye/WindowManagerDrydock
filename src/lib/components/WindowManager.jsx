@@ -270,7 +270,7 @@ export class WindowManager extends React.Component {
               resizable={aTemplate.resizable}
               popWindow={this.popWindow.bind(this)} 
               deleteWindow={this.deleteWindow.bind(this)}>
-                {aContent}
+                {React.cloneElement(aContent, { propagationData: this.state.trigger })}
             </Dialog>);
           }
         }
@@ -290,7 +290,7 @@ export class WindowManager extends React.Component {
             key={aTemplate.index} 
             popWindow={this.popWindow.bind(this)} 
             deleteWindow={this.deleteWindow.bind(this)}>
-              {aContent}
+              {React.cloneElement(aContent, { propagationData: this.state.trigger })}
           </ToolWindow>);
         }
       }
@@ -309,7 +309,7 @@ export class WindowManager extends React.Component {
             key={aTemplate.index} 
             popWindow={this.popWindow.bind(this)} 
             deleteWindow={this.deleteWindow.bind(this)}>
-              {aContent}
+              {React.cloneElement(aContent, { propagationData: this.state.trigger })}
           </WindowApplication>);
         }
       }
@@ -328,7 +328,7 @@ export class WindowManager extends React.Component {
             key={aTemplate.index} 
             popWindow={this.popWindow.bind(this)} 
             deleteWindow={this.deleteWindow.bind(this)}>
-              {aContent}
+              {React.cloneElement(aContent, { propagationData: this.state.trigger })}
           </WindowBasicApplication>);
         }
       }      
@@ -349,7 +349,7 @@ export class WindowManager extends React.Component {
         key={modalTop.index} 
         popWindow={this.popWindow.bind(this)} 
         deleteWindow={this.deleteWindow.bind(this)}>
-          {aModalContent}
+          {React.cloneElement(aModalContent, { propagationData: this.state.trigger })}
       </Dialog>);
     }
 

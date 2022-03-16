@@ -133,6 +133,13 @@ export default class ApplicationManager extends ApplicationDriver {
       }
     }
 
+    if (anApplication.hasOwnProperty ("isSystem")==false) {
+      anApplication.isSystem=false;
+    } else {
+      console.log ("Adding an application with a system flag");
+    }
+
+    anApplication.selected=false;
     anApplication.shown=true;
     anApplication.maximized=false;
     anApplication.index=this.index;

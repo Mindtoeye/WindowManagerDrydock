@@ -5,6 +5,9 @@
   overflow: auto;
   padding: 3px;
   background: #202020;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
 }
 
 .wtaskmanageritem {
@@ -30,4 +33,13 @@
 .wtaskmanagercontent {
   flex: 1;
   font-size: 7pt;
+}
+
+.wtasklist {
+  flex: 1;
+}
+
+/* Move this to core */
+.wtaskvpadding {
+  flex: 1;
 }

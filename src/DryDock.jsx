@@ -42,6 +42,7 @@ class DryDock extends Component {
       type: WindowConstants.WINDOW_DEFAULT,
       width: 250,
       height: 300,
+      isSystem: true,
       content: <WindowTaskManager appManager={this.appManager} />
     });
 
