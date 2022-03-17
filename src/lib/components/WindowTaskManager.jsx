@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 
 import { KnossysInfoPanel, KButton, KList, KToolbar, KToolbarItem } from '@knossys/knossys-ui-core';
 
-import { FaFile, FaFolder, FaFolderOpen } from 'react-icons/fa';
-import { MdAddLocation, MdUnfoldMore, MdUnfoldLess } from 'react-icons/md';
-import { RiStackshareLine } from 'react-icons/ri';
-import { GrUndo, GrRedo } from 'react-icons/gr';
-import { AiOutlineFolderOpen, AiOutlineFolder} from 'react-icons/ai';
+import { AiOutlineSortAscending, AiOutlineSortDescending, AiOutlineToTop } from 'react-icons/ai';
+import { BsStack } from 'react-icons/bs';
 
 import './styles/wtaskmanager.css';
 
@@ -89,10 +86,10 @@ class WindowTaskManager extends Component {
 
     return (<div className="wtaskmanager">
       <KToolbar direction={KToolbar.DIRECTION_VERTICAL}>
-        <KToolbarItem onClick={(e) => this.onToolbarItemClick (e,1)}><RiStackshareLine /></KToolbarItem>
-        <KToolbarItem onClick={(e) => this.onToolbarItemClick (e,2)}><GrUndo /></KToolbarItem>
-        <KToolbarItem onClick={(e) => this.onToolbarItemClick (e,3)}><GrRedo /></KToolbarItem>
-        <KToolbarItem onClick={(e) => this.onToolbarItemClick (e,4)}><MdAddLocation /></KToolbarItem>
+        <KToolbarItem onClick={(e) => this.onToolbarItemClick (e,1)} toggle={true} tooltip="Sort based on z-order"><BsStack /></KToolbarItem>
+        <KToolbarItem onClick={(e) => this.onToolbarItemClick (e,2)} toggle={true} tooltip="Sort by window title"><AiOutlineSortAscending /></KToolbarItem>
+        <KToolbarItem onClick={(e) => this.onToolbarItemClick (e,3)} toggle={true} tooltip="Sort by window title"><AiOutlineSortDescending /></KToolbarItem>
+        <KToolbarItem onClick={(e) => this.onToolbarItemClick (e,4)} toggle={true} tooltip="Move to top"><AiOutlineToTop /></KToolbarItem>
         <div className="wtaskvpadding">&nbsp;</div>
       </KToolbar>
       <div className="wtasklist">
