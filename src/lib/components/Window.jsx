@@ -8,7 +8,7 @@ import { uuidv4 } from './utils/uuid';
 
 import './styles/wmanager.css';
 
-import gripper from './styles/images/icons/resize.png';
+import gripper from './styles/images/resize.png';
 
 /**
  *
@@ -210,6 +210,9 @@ export class Window extends React.Component {
    *
    */  
   render() {
+    console.log ("render ()");
+    console.log (this.props.reference);
+    
     let xPos=this.props.reference.x;
     let yPos=this.props.reference.y;
     let aWidth=this.props.reference.width;

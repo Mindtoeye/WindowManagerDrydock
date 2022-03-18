@@ -285,7 +285,7 @@
   */
   right: 0px;
   bottom: 0px;
-  background: url("images/icons/resize.png") no-repeat fixed center;
+  background: url("images/resize.png") no-repeat fixed center;
   cursor: nwse-resize;  
   line-height: 6pt;
 }

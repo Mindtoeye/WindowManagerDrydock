@@ -37,6 +37,8 @@
 
 .wtasklist {
   flex: 1;
+  /* https://www.peakpx.com/en/hd-wallpaper-desktop-kmyeo */
+  background-image: url('./images/backgrounds/taskmanager-background.png');
 }
 
 /* Move this to core */

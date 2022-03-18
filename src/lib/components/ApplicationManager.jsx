@@ -2,8 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import ApplicationDriver from './ApplicationDriver';
+import DefaultApp from './DefaultApp';
 import DataTools from './utils/DataTools';
 import WindowConstants from './WindowConstants';
+import WindowDummyContent from './WindowDummyContent';
+import WindowDummyComponent from './WindowDummyComponent';
 
 import { uuidv4 } from './utils/uuid';
 
@@ -37,7 +40,7 @@ export default class ApplicationManager extends ApplicationDriver {
    */
   listWindows () {
     for (let i=0;i<this.apps.length;i++) {
-      let app=this.apps [i];
+      let app=this.apps [i].data;
       console.log ("Window: " + app.title + ", modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown);
       console.log (app);
     }
@@ -52,9 +55,7 @@ export default class ApplicationManager extends ApplicationDriver {
     let appData=this.getApps();
 
     for (let i=0;i<appData.length;i++) {
-      let app=appData [i];
-
-      //console.log ("Comparing " + app.id + ", to: " + anId);
+      let app=appData [i].data;
 
       if (app.id==anId) {
         console.log ("Changing visibility of application ...");
@@ -78,7 +79,7 @@ export default class ApplicationManager extends ApplicationDriver {
     let appData=this.getApps();
 
     for (let i=0;i<appData.length;i++) {
-      let app=appData [i];
+      let app=appData [i].data;
 
       if (app.id==anId) {
         console.log ("Removing application ...");
@@ -93,8 +94,24 @@ export default class ApplicationManager extends ApplicationDriver {
    *
    */
   getApps () {
-    return (this.apps);
+    //return (this.apps);
+
+    let list=[];
+
+    for (let i=0;i<this.apps.length;i++) {
+      let windata=this.dataTools.deepCopy (this.apps [i].data);
+      list.push (windata);
+    }
+
+    return (list);
   }
+
+  /**
+   *
+   */
+  getAppsAll () {
+    return (this.apps);
+  }  
 
   /**
    * 
@@ -123,60 +140,80 @@ export default class ApplicationManager extends ApplicationDriver {
 
     console.log (anApplication);
 
-    if (anApplication.hasOwnProperty ("type")==false) {
-      anApplication.type=WindowConstants.WINDOW_DEFAULT;
+    let application={
+      data: {
+        title: "Knossys Basic Panel",
+        type: WindowConstants.WINDOW_DEFAULT,
+        x: this.dataTools.getRandomInt (100),
+        y: this.dataTools.getRandomInt (100),
+        width: 320,
+        height: 200,
+        resizable: true,
+        isSystem: false,
+        modal: false,
+        selected: false,
+        shown: true,
+        maximized: false,
+        index: this.index,
+        id: uuidv4()  
+      },
+      content: <WindowDummyComponent />,
+      app: new DefaultApp ()
+    };
+
+    if (anApplication.hasOwnProperty ("type")==true) {    
+      application.data.type=anApplication.type;
     }
 
-    if (anApplication.type==WindowConstants.WINDOW_DIALOG) {
-      if (anApplication.hasOwnProperty ("resizable")==false) {
-        anApplication.resizable=false;
+    if (anApplication.hasOwnProperty ("title")==true) {    
+      application.data.title=anApplication.title;
+    }    
+
+    if (anApplication.hasOwnProperty ("app")==true) {
+      application.app=anApplication.app;
+    }
+
+    if (anApplication.hasOwnProperty ("content")==true) {
+      application.content=anApplication.content;
+    }
+
+    if (application.data.type==WindowConstants.WINDOW_DIALOG) {
+      if (anApplication.hasOwnProperty ("resizable")==true) {
+        application.data.resizable=anApplication.resizable;
       }
     }
 
-    if (anApplication.hasOwnProperty ("isSystem")==false) {
-      anApplication.isSystem=false;
-    } else {
-      console.log ("Adding an application with a system flag");
+    if (anApplication.hasOwnProperty ("isSystem")==true) {
+      application.data.isSystem=anApplication.isSystem;
     }
 
-    anApplication.selected=false;
-    anApplication.shown=true;
-    anApplication.maximized=false;
-    anApplication.index=this.index;
-    anApplication.id=uuidv4();
-
-    if (anApplication.hasOwnProperty ("modal")==false) {
-      anApplication.modal=false;
+    if (anApplication.hasOwnProperty ("modal")==true) {
+      application.data.modal=anApplication.modal;
     }    
 
-    if (anApplication.hasOwnProperty ("centered")==false) {
-      console.log ("Window template doesn't have centered attribute");
-      if (anApplication.modal==true) {
-        anApplication.centered=true;
-      } else {
-        anApplication.centered=false;        
-      }
+    if (anApplication.hasOwnProperty ("centered")==true) {
+      application.data.centered=anApplication.centered;
     }
 
-    if (anApplication.hasOwnProperty ("x")==false) {
-      anApplication.x=this.dataTools.getRandomInt (100);
+    if (anApplication.hasOwnProperty ("x")==true) {
+      application.data.x=anApplication.x;
     }
 
-    if (anApplication.hasOwnProperty ("y")==false) {
-      anApplication.y=this.dataTools.getRandomInt (100);
-    }    
-
-    if (anApplication.hasOwnProperty ("width")==false) {
-      anApplication.width=320;
+    if (anApplication.hasOwnProperty ("y")==true) {
+      application.data.y=anApplication.y;
     }
 
-    if (anApplication.hasOwnProperty ("height")==false) {
-      anApplication.height=200;
-    }        
+    if (anApplication.hasOwnProperty ("width")==true) {
+      application.data.width=anApplication.width;
+    }
+
+    if (anApplication.hasOwnProperty ("height")==true) {
+      application.data.height=anApplication.height;
+    }
 
     this.index++;
 
-    this.apps.push (anApplication);
+    this.apps.push (application);
 
     if (this.onUpdate) {
       this.onUpdate ();

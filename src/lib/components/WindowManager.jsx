@@ -11,7 +11,6 @@ import DataTools from './utils/DataTools';
 import WindowConstants from './WindowConstants';
 import WindowDummyComponent from './WindowDummyComponent';
 
-//import './styles/darktheme.css';
 import './styles/wmanager.css';
 
 /**
@@ -189,17 +188,17 @@ export class WindowManager extends React.Component {
     let windows=[];
     let zIndex=1;
 
-    let windowReferences=this.props.appManager.getApps ();
+    let windowReferences=this.props.appManager.getAppsAll ();
     
     for (var k=0;k<windowReferences.length;k++) {
       let aTemplate=windowReferences [k];
 
-      if (aTemplate.maximized==true) {
+      if (aTemplate.data.maximized==true) {
         return (aTemplate.content);
       }
 
-      if (aTemplate.type==WindowConstants.WINDOW_DIALOG) {
-        if (aTemplate.mode=="modal") {
+      if (aTemplate.data.type==WindowConstants.WINDOW_DIALOG) {
+        if (aTemplate.data.mode=="modal") {
           scrim=<Scrim visible={true}></Scrim>;
         }
       }
@@ -210,14 +209,14 @@ export class WindowManager extends React.Component {
 
     for (var i=0;i<windowReferences.length;i++) {
 
-      let aTemplate=windowReferences [i];
+      let aTemplate=windowReferences [i].data;
       let aContent;
 
-      if (aTemplate.content) {
-        if (typeof aTemplate.content === 'function') {
-          aContent=aTemplate.content ();
+      if (windowReferences [i].content) {
+        if (typeof windowReferences [i].content === 'function') {
+          aContent=windowReferences [i].content ();
         } else {
-          aContent=aTemplate.content;
+          aContent=windowReferences [i].content;
         }
       }
 

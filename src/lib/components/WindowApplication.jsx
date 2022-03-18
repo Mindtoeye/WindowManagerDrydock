@@ -10,7 +10,7 @@ import { uuidv4 } from './utils/uuid';
 
 import './styles/wmanager.css';
 
-import gripper from './styles/images/icons/resize.png';
+import gripper from './styles/images/resize.png';
 
 /**
  *

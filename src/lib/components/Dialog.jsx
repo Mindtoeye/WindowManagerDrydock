@@ -7,7 +7,7 @@ import { KButton } from '@knossys/knossys-ui-core';
 
 import { uuidv4 } from './utils/uuid';
 
-import gripper from './styles/images/icons/resize.png';
+import gripper from './styles/images/resize.png';
 
 /**
  *
