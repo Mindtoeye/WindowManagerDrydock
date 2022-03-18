@@ -114,6 +114,7 @@ class WindowTaskManager extends Component {
     console.log ("WindowTaskManager:render()");
 
     let itemClass="wtaskmanageritem";
+    let itemClassTitle="wtaskmanagertitle";
 
     let windowList=[];
 
@@ -122,13 +123,17 @@ class WindowTaskManager extends Component {
     for (let i=0;i<winlist.length;i++) {
       let app=winlist[i];
 
+      if (app.selected==true) {
+        itemClassTitle="wtaskitemselected";
+      }
+
       // Don't show windows and elements that are part of the Knossys system itself
       if (app.hasOwnProperty ("isSystem")==true) {
         if (app.isSystem==false) {
-          windowList.push (<div key={"winitem-"+i} className={itemClass} onClick={(e) => this.onSelectWindow (e,i)}><div className="wtaskmanagertitle">{app.title}</div><div className="wtaskmanagercontent">{"modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown}</div></div>);
+          windowList.push (<div key={"winitem-"+i} className={itemClass} onClick={(e) => this.onSelectWindow (e,i)}><div className={itemClassTitle}>{app.title}</div><div className="wtaskmanagercontent">{"modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown}</div></div>);
         }
       } else {
-        windowList.push (<div key={"winitem-"+i} className={itemClass}><div className="wtaskmanagertitle">{app.title}</div><div className="wtaskmanagercontent">{"modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown}</div></div>);
+        windowList.push (<div key={"winitem-"+i} className={itemClass}><div className={itemClassTitle}>{app.title}</div><div className="wtaskmanagercontent">{"modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown}</div></div>);
       }
     }
 
