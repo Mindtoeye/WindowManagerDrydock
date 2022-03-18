@@ -57,6 +57,10 @@
   padding: 1px;  
 }
 
+.window-selected {
+  background-color: #5e5d5db8;
+}
+
 .dialogWindow {
   background-color: #525252;
   position: absolute;
@@ -163,20 +167,20 @@
 }
 
 .macribbon {
-    margin-left: 2px;
-    margin-right: 2px;
-    margin: 1px;
-    padding: 3px;
-    padding-left: 4px;
-    padding-right: 4px;
-    background: #292929;
-    border-radius: 3px 3px 0px 0px;
-    -moz-border-radius: 3px 3px 0px 0px;
-    -webkit-border-radius: 3px 3px 0px 0px;
-    color: #989898;
-    font-size: 8pt;
-    display: flex;
-    flex-direction: row;
+  margin-left: 2px;
+  margin-right: 2px;
+  margin: 1px;
+  padding: 3px;
+  padding-left: 4px;
+  padding-right: 4px;
+  background: #292929;
+  border-radius: 3px 3px 0px 0px;
+  -moz-border-radius: 3px 3px 0px 0px;
+  -webkit-border-radius: 3px 3px 0px 0px;
+  color: #989898;
+  font-size: 8pt;
+  display: flex;
+  flex-direction: row;
 }
 
 .macribbon-narrow {
@@ -205,19 +209,17 @@
   margin-left: 2px;
   margin-right: 2px;
   margin: 1px;
-  padding: 1px;
+  padding: 3px;
   padding-left: 4px;
   padding-right: 4px;
-  background: #292929;
+  background: #1c1c1c;
   border-radius: 3px 3px 0px 0px;
   -moz-border-radius: 3px 3px 0px 0px;
   -webkit-border-radius: 3px 3px 0px 0px;
-  color: white;
-  
+  color: #989898;
   font-size: 8pt;
-
   display: flex;
-  flex-direction: row;  
+  flex-direction: row;
 }
 
 .titlebar {

@@ -144,15 +144,16 @@ export class WindowManager extends React.Component {
    *
    */
   popWindow (targetWindow) {
-    //console.log ("popWindow("+targetWindow+")");
+    console.log ("popWindow("+targetWindow+")");
 
-    let list=this.props.appManager.getApps ();
+    let list=this.props.appManager.getAppsAll ();
 
     // This method should be a no-op if we're displaying a modal dialog
     for (let k=0;k<list.length;k++) {
-      if (list [k].id==targetWindow) {
-        if (list [k].type=="dialog") {          
-          if (list [k].modal==true) {
+      let application=list [k];
+      if (application.data.id==targetWindow) {
+        if (application.data.type=="dialog") {          
+          if (application.data.modal==true) {
             //console.log ("Modal dialog clicked, nop");
             return;
           }
@@ -161,17 +162,19 @@ export class WindowManager extends React.Component {
     }
 
     for (let j=0;j<list.length;j++) {
-      list [j].selected=false;
+      let win=list [j].data;
+      win.selected=false;
     }
 
-    for (let i=0;i<list.length;i++) {
-      let win=list [i];
+    for (let i=0;i<list.length;i++) {      
+      let app=list [i];
+      let win=app.data;
       if (win.id==targetWindow) {
         //console.log ("Take out of the list/remove from current z position");
-        let updated=this.dataTools.deleteElement (list,win);
+        let updated=this.dataTools.deleteElement (list,app);
         //console.log ("Push to the top of the list");
         win.selected=true;
-        updated.push (win);
+        updated.push (app);
         this.setState ({pop: this.state.pop++});
         return;
       }

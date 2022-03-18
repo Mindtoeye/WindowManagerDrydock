@@ -210,9 +210,12 @@ export class Window extends React.Component {
    *
    */  
   render() {
-    console.log ("render ()");
-    console.log (this.props.reference);
-    
+    //console.log ("render ()");
+    //console.log (this.props.reference);
+
+    let windowClasses="genericWindow";
+    let titleClasses="macribbon handle";
+
     let xPos=this.props.reference.x;
     let yPos=this.props.reference.y;
     let aWidth=this.props.reference.width;
@@ -223,6 +226,13 @@ export class Window extends React.Component {
     if (this.props.reference.title) {
       title=this.props.reference.title;
     }
+
+    if (this.props.reference.selected) {
+      if (this.props.reference.selected==true) {
+        windowClasses="genericWindow window-selected";
+        titleClasses="macribbonselected handle";
+      }
+    }    
 
     if (typeof(this.props.reference.width) == 'number') {
       aWidth=this.props.reference.width+"px";
@@ -256,8 +266,8 @@ export class Window extends React.Component {
 
     return (
      <Draggable handle=".handle" defaultPosition={{x: 0, y: 0}} scale={1}>
-      <div key={this.props.reference.id} id={this.props.reference.id} className="genericWindow" onClick={() => this.props.popWindow(this.props.id)} style={{left: xPos, top: yPos, width: aWidth, height: aHeight,zIndex: anIndex}}>
-        <div className="macribbon handle" onClick={() => this.props.popWindow(this.props.id)}>
+      <div key={this.props.reference.id} id={this.props.reference.id} className={windowClasses} onClick={() => this.props.popWindow(this.props.id)} style={{left: xPos, top: yPos, width: aWidth, height: aHeight,zIndex: anIndex}}>
+        <div className={titleClasses} onClick={() => this.props.popWindow(this.props.id)}>
           <div className="titlecontent">
             {title}
           </div>
