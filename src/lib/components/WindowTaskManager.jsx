@@ -110,15 +110,40 @@ class WindowTaskManager extends Component {
   /**
    * 
    */
-  render () {
-    console.log ("WindowTaskManager:render()");
-
+  generateZOrderedList (winlist) {
     let itemClass="wtaskmanageritem";
     let itemClassTitle="wtaskmanagertitle";
 
     let windowList=[];
 
-    let winlist=this.getWinList ();
+    for (let i=0;i<winlist.length;i++) {
+      let app=winlist[i];
+
+      if (app.selected==true) {
+        itemClassTitle="wtaskitemselected";
+      }
+
+      // Don't show windows and elements that are part of the Knossys system itself
+      if (app.hasOwnProperty ("isSystem")==true) {
+        if (app.isSystem==false) {
+          windowList.unshift (<div key={"winitem-"+i} className={itemClass} onClick={(e) => this.onSelectWindow (e,i)}><div className={itemClassTitle}>{app.title}</div><div className="wtaskmanagercontent">{"modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown}</div></div>);
+        }
+      } else {
+        windowList.unshift (<div key={"winitem-"+i} className={itemClass}><div className={itemClassTitle}>{app.title}</div><div className="wtaskmanagercontent">{"modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown}</div></div>);
+      }
+    }    
+
+    return (windowList);
+  }
+
+  /**
+   * 
+   */
+  generateAZOrderedList (winlist) {
+    let itemClass="wtaskmanageritem";
+    let itemClassTitle="wtaskmanagertitle";
+
+    let windowList=[];
 
     for (let i=0;i<winlist.length;i++) {
       let app=winlist[i];
@@ -135,7 +160,61 @@ class WindowTaskManager extends Component {
       } else {
         windowList.push (<div key={"winitem-"+i} className={itemClass}><div className={itemClassTitle}>{app.title}</div><div className="wtaskmanagercontent">{"modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown}</div></div>);
       }
+    }    
+
+    return (windowList);
+  }
+
+  /**
+   * 
+   */
+  generateZAOrderedList (winlist) {
+    let itemClass="wtaskmanageritem";
+    let itemClassTitle="wtaskmanagertitle";
+    
+    let windowList=[];
+
+    for (let i=0;i<winlist.length;i++) {
+      let app=winlist[i];
+
+      if (app.selected==true) {
+        itemClassTitle="wtaskitemselected";
+      }
+
+      // Don't show windows and elements that are part of the Knossys system itself
+      if (app.hasOwnProperty ("isSystem")==true) {
+        if (app.isSystem==false) {
+          windowList.push (<div key={"winitem-"+i} className={itemClass} onClick={(e) => this.onSelectWindow (e,i)}><div className={itemClassTitle}>{app.title}</div><div className="wtaskmanagercontent">{"modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown}</div></div>);
+        }
+      } else {
+        windowList.push (<div key={"winitem-"+i} className={itemClass}><div className={itemClassTitle}>{app.title}</div><div className="wtaskmanagercontent">{"modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown}</div></div>);
+      }
+    }    
+
+    return (windowList);
+  }    
+
+  /**
+   * 
+   */
+  render () {
+    console.log ("WindowTaskManager:render()");
+
+    let windowList=[];
+
+    let winlist=this.getWinList ();
+
+    if (this.state.sort==WindowTaskManager.SORT_BY_ZINDEX) {
+      windowList=this.generateZOrderedList (winlist);
     }
+
+    if (this.state.sort==WindowTaskManager.SORT_BY_AZ) {
+      windowList=this.generateAZOrderedList (winlist);
+    }
+
+    if (this.state.sort==WindowTaskManager.SORT_BY_ZA) {
+      windowList=this.generateZAOrderedList (winlist);
+    }        
 
     return (<div className="wtaskmanager">
       <KToolbar direction={KToolbar.DIRECTION_VERTICAL}>

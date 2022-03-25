@@ -270,17 +270,6 @@ class DryDock extends Component {
    *
    */
   render() {
-    /*
-    let apps=this.appManager.getApps ();
-
-    let windowList=[];
-
-    for (let i=0;i<apps.length;i++) {
-      let app=apps[i];
-      windowList.push ("Window: " + app.id + ", modal: " + app.modal + ", centered: " + app.centered + ", type: " + app.type + ", shown: " + app.shown);
-    }
-    */
-
     return (
      <WindowManager 
         onKeyDown={this.onKeyDown}
